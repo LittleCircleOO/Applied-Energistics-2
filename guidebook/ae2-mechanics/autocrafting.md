@@ -55,50 +55,47 @@ navigation:
 
 <ItemImage id="crafting_pattern" scale="4" />
 
-样板在 <ItemLink id="pattern_encoding_terminal" /> 中由空白样板构成。
+样板在 <ItemLink id="pattern_encoding_terminal" /> 中由空白样板制作。
 
-There are several different types of pattern for different things:
+有几种不同类型的样板适用于不同的合成方式：
 
-*   <ItemLink id="crafting_pattern" />s encode recipes made by a crafting table. They can be put directly in a <ItemLink id="molecular_assembler" /> to make it
-    craft the result whenever given the ingredients, but their main use is in a <ItemLink id="pattern_provider" /> next to a molecular assembler.
-    Pattern providers have special behavior in this case, and will send the relevant pattern along with the ingredients to adjacent assemblers.
-    Since assemblers auto-eject the results of crafts to adjacent inventories, an assembler on a pattern provider is all that is needed to automate crafting patterns.
-
-***
-
-*   <ItemLink id="smithing_table_pattern" />s are very similar to crafting patterns, but they encode smithing table recipes. They are also automated by a pattern
-    provider and molecular assembler, and function in the exact same way. In fact, crafting, smithing, and stonecutting patterns can be
-    used in the same setup.
+*   <ItemLink id="crafting_pattern" /> 对工作台合成的配方进行编码。它们可以直接放在 <ItemLink id="molecular_assembler" /> 中
+    使其在给定原料的情况下制作出结果。但它们的主要用途是放在分子装配室相邻的 <ItemLink id="pattern_provider" /> 中。
+    在这种情况下，样板供应器具有特殊行为，会将相关样板连同原料一起发送给相邻的分子装配室。
+    由于装配器会自动将制作结果弹射到相邻的库存中，因此只需在样板供应器上安装一个分子装配室，就能自动制作合成样板指定的配方。
 
 ***
 
-*   <ItemLink id="stonecutting_pattern" />s are very similar to crafting patterns, but they encode stonecutter recipes. They are also automated by a pattern
-    provider and molecular assembler, and function in the exact same way. In fact, crafting, smithing, and stonecutting patterns can be
-    used in the same setup.
+*   <ItemLink id="smithing_table_pattern" /> 与合成样板非常相似，但它们编码的是锻造台配方。
+    它们也由样板供应器和分子装配室自动完成，功能完全相同。
+    事实上，合成样板、锻造台样板和切石机样板可以在相同的装置中使用。
 
 ***
 
-*   <ItemLink id="processing_pattern" />s are where a lot of flexibility in autocrafting comes from. They are the most generalized type, simply
-    saying "if a pattern provider pushes these ingredients to adjacent inventories, the ME system will recieve these items at some point in the
-    near or distant future". They are how you will autocraft with almost any modded machine, or furnaces and the like. Because they are so
-    general in use and do not care what happens between pushing ingredients and receiving the result, you can do some really funky stuff, like inputting
-    the ingredients into an entire complex factory production chain which will sort out stuff, take in other ingredients from infinitely-producing
-    farms, print the entirety of the Bee Movie script, the ME system does not care as long as it gets the result the pattern specifies. In fact,
-    it doesn't even care if the ingredients are in any way related to the result. You could tell it "1 cherry wood planks = 1 nether star" and have
-    your wither farm kill a wither upon receiving a cherry wood planks and it would work.
+*   <ItemLink id="stonecutting_pattern" /> 与合成样板非常相似，但它们编码的是切石机配方。
+    它们也由样板供应器和分子装配室自动完成，功能完全相同。
+    事实上，合成样板、锻造台样板和切石机样板可以在相同的装置中使用。
 
-Multiple <ItemLink id="pattern_provider" />s with identical patterns are supported and work in parallel. Additionally, you can have a pattern say,
-for example, 8 cobblestone = 8 stone instead of 1 cobblestone = 1 stone, and the pattern provider will insert 8 cobblestone into
-your smelting setup every operation instead of one at a time.
+***
 
-## The Most General Form of "Pattern"
+*   <ItemLink id="processing_pattern" /> 是自动合成中许多灵活性的来源。它们是最通用的类型，简单地说就是
+    “如果样板供应器将这些原料推送到邻近的容器中，ME 系统将在近期或远期的某个时间点收到这些产物”。
+    几乎所有模组机械或熔炉等都可以通过它们进行自动合成。因为它们的使用非常普遍，而且不关心在推送原料和接收结果之间会发生什么，
+    所以你可以做一些非常有趣的事情，比如把原料输入到整个复杂的工厂生产链中，这个生产链会分拣出东西，从无限生产的农场中接收其他原料，
+    打印整个蜜蜂电影剧本，只要能得到样板指定的产物，ME 系统就不会关心。
+    事实上，它甚至不在乎原料是否与结果有任何关联。
+    你可以告诉它“1 块樱花木板 = 1 颗下界之星”，然后让你的凋灵农场在收到樱花木板时杀死一个凋灵，这样就可以了。
 
-There is actually an even more "general" form of "pattern" than a processing pattern. A <ItemLink id="level_emitter" /> with a crafting card can be set
-to emit a redstone signal in order to craft something. This "pattern" does not define, or even care about ingredients.
-All it says is "If you emit redstone from this level emitter, the ME system will recieve this item at some point in the
-near or distant future". This is usually used to activate and deactivate infinite farms which require no input ingredients,
-or to activate a system that handles recursive recipes (which standard autocafting cannot understand) like, for example, "1 cobblestone = 2 cobblestone"
-if you have a machine that duplicates cobblestone.
+具有相同样板的多个 <ItemLink id="pattern_provider" /> 同样支持，并可并行工作。此外，您还可以设置一个样板，
+例如，8 块圆石 = 8 块石头，而不是 1 块圆石 = 1 块石头，
+这样样板供应器就会在每次操作中向您的熔炉装置中输入 8 块圆石，而不是一次输入一块。
+
+## 最通用的“样板”形式
+
+实际上，还有一种比处理样板更“通用”的“样板”。一个带有合成卡的 <ItemLink id="level_emitter" /> 可以被设置为发射红石信号以制作某种东西。
+这种“样板”并不定义或甚至不关心原料。它说的只是“如果你从这个标准发信器发出红石信号，ME 系统将在近期或远期的某个时间点收到这个产物”。
+这通常用于激活和停用不需要输入原料的无限农场，或者用于激活处理递归配方的系统（标准自动合成无法理解）
+例如，如果你有一台可以复制圆石的机器，就可以激活“1 块圆石 = 2 块圆石”的自动合成。
 
 # The Crafting CPU
 
