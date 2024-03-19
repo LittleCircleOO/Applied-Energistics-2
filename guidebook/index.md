@@ -1,30 +1,28 @@
 ---
 navigation:
-  title: Index/Table of Contents
+  title: 索引/目录
   position: 0
 ---
-# What is Applied Energistics 2?
+# 什么是应用能源 2 (AE2)?
 
-# How To Use This Guide
+# 如何使用本指南
 
-* Access the sidebar on the left to find a table of contents
-* Many pages have interactive scenes. If a scene has ![Plus](assets/diagrams/plus.png)
-and ![Minus](assets/diagrams/minus.png) (zoom) buttons next to it, you can rotate and move the camera.
-Left click and drag to rotate, right click and drag to translate.
+* 访问左侧边栏，查找目录
+* 许多页面都有交互式场景。如果一个场景旁边有 ![Plus](assets/diagrams/plus.png)
+和 ![Minus](assets/diagrams/minus.png) (缩放) 按钮，就可以旋转和移动摄像机。
+左键单击并拖动可旋转，右键单击并拖动可平移。
 
-# What is Applied Energistics 2?
+# 什么是应用能源 2 (AE2)?
 
-Applied Energistics 2 adds components and mechanics to provide logistics and storage solutions. You can replace your
-massive room full of chests with a compact ME Network, but that's just the beginning of things.
-Applied Energistics is meant to work with and allow automation of other mods in a modpack. You can set up your system to,
-with a single click, craft all of the prerequisites (and the final result) of a complex crafting chain, or keep certain
-quantities of items in stock, crafting more as needed, or simply transfer items around your base.
+应用能源 2 (AE2) 增加了提供物流和仓储解决方案的组件和机械装置。您可以用一个紧凑的 ME 网络来取代满是箱子的巨大房间，但这仅仅是事情的开始。
+应用能源 2 可与整合包中的其他 MOD 配合使用，实现自动化。
+只需点击一下，您就可以设置您的系统，用以制作一个复杂合成树的所有前置材料（和最终产物），或者维持一定数量的物品库存，根据需要制作更多的物品，或者简单地在您的基地内运输物品。
 
-* [Getting Started](getting-started.md)
-* [Tips and Tricks](tips-and-tricks.md)
-* [AE2 Mechanics](ae2-mechanics/ae2-mechanics-index.md)
-* [Example Setups](example-setups/example-setups-index.md)
-* [Items, Blocks, and Machines](items-blocks-machines/items-blocks-machines-index.md)
+* [入门](getting-started.md)
+* [提示与技巧](tips-and-tricks.md)
+* [AE2 机制](ae2-mechanics/ae2-mechanics-index.md)
+* [示例装置](example-setups/example-setups-index.md)
+* [物品, 方块与机械](items-blocks-machines/items-blocks-machines-index.md)
 
 <GameScene zoom="4" interactive={true}>
   <ImportStructure src="assets/assemblies/autocraft_setup_greebles.snbt" />
