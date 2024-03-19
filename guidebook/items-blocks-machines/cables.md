@@ -94,94 +94,83 @@ item_ids:
 - ae2:fluix_smart_dense_cable
 ---
 
-# Cables
+# 线缆  
 
 <GameScene zoom="3" background="transparent">
-  <ImportStructure src="../assets/assemblies/cables.snbt" />
+  <ImportStructure src="../assets/assemblies/cables.snbt" /> 
   <IsometricCamera yaw="180" pitch="30" />
 </GameScene>
 
-While ME networks are also created by adjacent ME-capable machines, cables are the primary way of
-extending an ME network over larger areas.
+虽然的具有 ME 功能的彼此相连的机械也能构建一个 ME 网络，但是线缆是将 ME 网络扩展到更大的区域的主要方式。
 
-Differently colored cables can be used to ensure adjacent cables do not connected to each other,
-allowing [channels](../ae2-mechanics/channels.md) to be distributed more efficiently. They also affect the color of terminals connected to them,
-so you don't have to have all your terminals be purple. Fluix cables connect to every other color.
+可以使用不同颜色的电缆来使相邻的电缆不会相互连接, 从而更高效地分配[通道](../ae2-mechanics/channels.md)。
+线缆本身的颜色也会影响附着到线缆上的端口的颜色, 所以你不必把所有终端染成紫色。
+福鲁伊克斯线缆将与所有其他颜色的线缆相连接。  
 
-Of note, **CHANNELS HAVE NOTHING TO DO WITH CABLE COLOR**
+值得注意的是, **频道与线缆颜色无关**。
 
-## An Important Note
+## 重要提示  
 
-**If you are new to AE2 and unfamiliar with channels, use smart cable and dense smart cable wherever you can.
-It will show how channels are routed through your network, making their behavior more understandable.**
+**如果你不熟悉 AE2 及其频道，请尽可能使用智能线缆和致密智能线缆。它们将显示频道在你的网络里是如何流通的，这样能更便于理解频道的工作方式。** 
 
-## Another Note
+## 其他提示  
 
-**These are not item or fluid or energy or etc. pipes.** They have no internal inventory, pattern providers and machines do not "push"
-into them, all they do is connect AE2 [devices](../ae2-mechanics/devices.md) together into a network.
+**线缆并不是承载物品/流体/能源等的管道。** 线缆没有内部的存储空间，样板供应器和其他机械并不会向线缆“推”入物品，
+线缆的作用仅仅是将 AE2 [设备](../ae2-mechanics/devices.md)连接进入网络。 
 
-## Glass Cable
+## 玻璃线缆  
 
 <GameScene zoom="6" background="transparent">
 <ImportStructure src="../assets/assemblies/fluix_glass_cable.snbt" />
 <IsometricCamera yaw="195" pitch="30" />
 </GameScene>
 
-<ItemLink id="fluix_glass_cable" /> is the simplest cable to make, transfers power
-and up to 8 [channels](../ae2-mechanics/channels.md). It comes in 17 diffrent colors, the default
-being Fluix, and can be dyed any color using any of the 16 dyes.
+<ItemLink id="fluix_glass_cable" />是最简单的线缆，能够传输电力和最多 8 个[频道](../ae2-mechanics/channels.md)。
+玻璃线缆有 17 种颜色，默认为福鲁伊克斯色，也可以用其他 16 种染料染色。  
 
-To craft colored cables surround a dye of any type with 8 cables of the same
-type ( color of the cables dosn't matter, but they must be the same type,
-glass, smart, etc ). You can also paint cables with any forge compatible paint
-brush in world.
+用 8 个相同类型的线缆（线缆的颜色可以不同，但是它们必须是同一类型，比如玻璃、智能等。）围一圈，中间放上任意染料。  
+也可以用与 Forge 兼容的任意画刷对线缆染色。  
 
-You can craft any colored cable with a water bucket to remove the dye.
+可以用水桶与任意染色的线缆合成以移除染色效果。  
 
-You can cover the cable with wool to create <ItemLink id="fluix_covered_cable" />, and craft <ItemLink id="fluix_smart_cable" /> to get a better idea of what is going on with
-your [channels](../ae2-mechanics/channels.md).
+线缆可以与羊毛一起合成<ItemLink id="fluix_covered_cable" />，也可以合成<ItemLink id="fluix_smart_cable" />以更方便地了解你的[频道](../ae2-mechanics/channels.md)的状况。  
 
-<RecipeFor id="fluix_glass_cable" />
+<RecipeFor id="fluix_glass_cable" />  
 
 <RecipeFor id="blue_glass_cable" />
 
-## Covered Cable
+## 包层线缆  
 
-<GameScene zoom="6" background="transparent">
+<GameScene zoom="6" background="transparent"> 
   <ImportStructure src="../assets/assemblies/fluix_covered_cable.snbt" />
   <IsometricCamera yaw="195" pitch="30" />
 </GameScene>
 
-The covered cable variant offers no gameplay benefits over its <ItemLink id="fluix_glass_cable" /> counterpart. It can however be used
-as an alternate aesthetic choice if you prefer the covered look.
+与同类的线缆<ItemLink id="fluix_glass_cable" />相比，包层线缆并没有什么玩法上的优势。但是如果你喜欢它包了一层皮的外观，包层线缆也可以作为兼顾美观性的替代品。  
 
-Can be colored in the same manner as <ItemLink id="fluix_glass_cable" />. Four <ItemLink id="fluix_covered_cable" /> can be crafted with
-redstone and glowstone to make <ItemLink id="fluix_covered_dense_cable" />.
+可以使用和<ItemLink id="fluix_glass_cable" />相同的方式为包层线缆染色。使用 4 个<ItemLink id="fluix_covered_cable" />以及红石和荧石制作<ItemLink id="fluix_covered_dense_cable" />。  
 
 <Recipe id="network/cables/covered_fluix" />
 
 <RecipeFor id="blue_covered_cable" />
 
-## Dense Cable
+## 致密线缆  
 
 <GameScene zoom="6" background="transparent">
   <ImportStructure src="../assets/assemblies/fluix_covered_dense_cable.snbt" />
-  <IsometricCamera yaw="195" pitch="30" />
+  <IsometricCamera yaw="195" pitch="30" /> 
 </GameScene>
 
-Higher Capacity cable, can carry 32 channels unlike standard cable which can only carry 8,
-however it doesn't support buses so you must first step down from dense to a
-smaller cable (such as <ItemLink id="fluix_glass_cable" /> or <ItemLink id="fluix_smart_cable" />) before using buses or
-panels.
+更大容量的线缆。相较于其他只能承载 8 个通道的普通线缆，致密线缆可以承载 32 个通道。致密线缆不支持总线，
+所以在使用总线或者面板之前，你需要从致密线缆降级至更小的线缆（例如<ItemLink id="fluix_glass_cable" />和<ItemLink id="fluix_smart_cable" />。  
 
-Dense cables slightly override the "shortest path" behavior of channels, channels will take the shortest path to a
-dense cable, and then the shortest path through that dense cable to a controller.
+致密线缆轻量重写了频道的“最短路径”行为。频道会先使用到达致密线缆的最短路径，然后使用通过致密线缆到达 ME 控制器的最短路径。 
 
-<Recipe id="network/cables/dense_covered_fluix" />
+<Recipe id="network/cables/dense_covered_fluix" /> 
 
 <RecipeFor id="blue_covered_dense_cable" />
 
-## Smart Cable
+## 智能线缆  
 
 <Row>
 <GameScene zoom="6" background="transparent">
@@ -189,26 +178,24 @@ dense cable, and then the shortest path through that dense cable to a controller
   <IsometricCamera yaw="195" pitch="30" />
 </GameScene>
 <GameScene zoom="6" background="transparent">
-  <ImportStructure src="../assets/assemblies/fluix_smart_dense_cable.snbt" />
+  <ImportStructure src="../assets/assemblies/fluix_smart_dense_cable.snbt" /> 
   <IsometricCamera yaw="195" pitch="30" />
 </GameScene>
 </Row>
 
-While bearing some similarity to <ItemLink id="fluix_covered_cable" /> in appearance, they
-provide diagnostic function by visualizing the channel usage on the cables,
-the channels appear as lit colored lines that run along the black stripe on
-the cables giving you an understanding of how your channels are being used on
-your network. For regular smart cables, the first four channels show as lines matching the color of the
-cable, the next four show as white lines. For dense smart cable, each stripe represents 4 channels.
+虽然在外观上和<ItemLink id="fluix_covered_cable" />很相似，但智能线缆会提供一个诊断功能：将线缆内的频道使用情况以可视化的形式表现出来。
+频道在线缆上显示为在黑色条纹上发光的彩色线条，让你可以了解到你的频道在网络中的使用情况。
+对于普通的智能线缆，前四个频道显示为与线缆颜色相同的颜色的线条，后四个频道显示为白色线条。
+对于致密智能线缆，每 4 个频道显示为 1 个线条。
 
-On networks with a <ItemLink id="controller" />, the lines on the cables show the exact path the channels take.
+在具备<ItemLink id="controller" />的网络中，智能线缆上的线条显示的是频道使用的确切路径。 
 
-Smart cables on ad-hoc networks will instead show the number of channels in use network-wide instead of the number of channels flowing through that specific cable.
+不具备控制器的临时网络中，智能线缆上的线条显示的是整个网络中的频道总数，而不是流经该线缆的频道数。   
 
-These can also be colored in the same manner as <ItemLink id="fluix_glass_cable" />.
+也可以使用和<ItemLink id="fluix_glass_cable" />相同的方式为智能线缆染色.  
 
 <Recipe id="network/cables/smart_fluix" />
 
 <Recipe id="network/cables/dense_smart_fluix" />
 
-<RecipeFor id="blue_smart_cable" />
+<RecipeFor id="blue_smart_cable" /> 
