@@ -1,62 +1,61 @@
 ---
 navigation:
   parent: ae2-mechanics/ae2-mechanics-index.md
-  title: Autocrafting
+  title: 自动合成
   icon: pattern_provider
 ---
 
-# Autocrafting
+# 自动合成
 
-### The Big One
+### 大家伙
 
 <GameScene zoom="4" interactive={true}>
   <ImportStructure src="../assets/assemblies/autocraft_setup_greebles.snbt" />
   <IsometricCamera yaw="195" pitch="30" />
 </GameScene>
 
-Autocrafting is one of the primary functions of AE2. Instead of manually having to craft the correct number of each sub-ingredient
-and labor away like some sort of *plebian*, you can ask your ME system to do it for you. Or automatically craft items and export them somewhere.
-Or automatically keep certain amounts of items in stock through clever emergent behavior. It also works with fluids, and, if you have
-certain addons for extra mod material types, like Mekanism gasses, those materials too. It's pretty great.
+自动合成是 AE2 的主要功能之一。您可以让您的 ME 系统为您代劳，而不必手动制作正确数量的每种子原料，像某种*帕鲁*一样劳累。
+亦或是自动制作物品并导出到某个地方。亦或是通过巧妙的应急行为自动保持一定数量的库存。
+它还适用于流体，如果你有某些额外的 MOD 材料类型，如通用机械的气体，那么这些材料也同样适用。它非常棒。
 
-It is quite a complex topic, so strap in and let's go.
+这是一个相当复杂的话题，所以请坐好，我们开始吧。
 
-An autocrafting setup consists of 3 things:
-- The thing sending the crafting request
-- The crafting CPU
-- The <ItemLink id="pattern_provider" />.
+自动合成装置包括 3 个部分：
+- 发送制作请求的来源
+- 合成处理单元(CPU)
+- <ItemLink id="pattern_provider" />
 
-Here is what happens:
+具体情况如下：
 
-1.  Something creates a crafting request. This can be you in the terminal clicking on something autocraftable,
-    or an export bus or interface with a crafting card requesting one of the item they're set to export/stock.
+1.  一些东西创建了制作请求。这可能是你在终端点击了某件可自动制作的物品、
+    或者输出总线/ME 接口上的合成卡请求输出/储存其中一件物品。
 
-*   (**IMPORTANT:** use whatever you have bound to "pick block" (usually middle-mouse) to request crafts of something you already have in stock, this can conflict with inventory sorting mods),
+*   （**重要：** 使用“	选取方块”键（通常是鼠标中键）来请求制作已有库存的物品，这可能会与物品整理模组发生冲突），
 
-2.  The ME system calculates the required ingredients and prerequisite crafting steps to fulfill the request, and stores them in the selected crafting CPU
+2.  ME 系统会计算满足要求所需的原料和前置合成步骤，并将其存储在选定的合成 CPU 中
 
-3.  The <ItemLink id="pattern_provider" /> with the relevant [pattern](../items-blocks-machines/patterns.md) pushes the ingredients specified in the pattern to any adjacent inventory.
-    In the case of a crafting table recipe (a "crafting pattern") this will be a <ItemLink id="molecular_assembler" />.
-    In the case of a non-crafting recipe (a "processing pattern") this will be some other block or machine or elaborate redstone-controlled setup.
+3.  带有相关 [样板](../items-blocks-machines/patterns.md) 的 <ItemLink id="pattern_provider" /> 会将样板中指定的原料推送到任何相邻的容器中。
+    如果是工作台配方（“合成样板”）容器将是一个 <ItemLink id="molecular_assembler" />。
+    如果是非合成配方（“处理样板”）容器将是其他一些块、机器或精心制作的红石控制装置。
 
-4.  The result of the craft is returned to the system somehow, be it by import bus, interface, or pushing the result back into a pattern provider.
-    **Note that an "item entering system" event must occur, you can't just pipe the result into a chest with a <ItemLink id="storage_bus" /> on it.**
+4.  合成的产物会以某种方式返回系统，无论是通过输入总线、ME 接口，还是将产物推送回样板供应器。
+    **请注意，必须发生“物品进入系统”事件，不能单纯将产物输入一个带有 <ItemLink id="storage_bus" /> 的箱子。**
 
-5.  If that craft is a prerequisite for another craft in the request, the items are stored in that crafting CPU and then used in that craft.
+5.  如果某合成是请求中另一合成的前置条件，则物品会存储在该合成 CPU 中，然后用于该前置合成。
 
-## Recursive Recipes
+## 递归配方
 
 <ItemImage id="minecraft:netherite_upgrade_smithing_template" scale="4" />
 
-One thing the autocrafting algorithm *cannot* handle is recursive recipes. For example, duplication recipes like
-"1 redstone dust = 2 redstone dust", from throwing redstone in a Botania manapool. Another example would be smithing templates
-in vanilla Minecraft. However, there is [a way to handle these recipes.](../example-setups/recursive-crafting-setup.md)
+自动合成算法 *无法* 处理的一种情况是递归配方。例如“1 个红石粉 = 2 个红石粉”这样的复制配方，来源于将红石粉丢入植物魔法魔力池。
+另一个例子是原版 Minecraft 中的锻造模板。
+不过，有 [一种方法可以处理这些配方](../example-setups/recursive-crafting-setup.md)。
 
-# Patterns
+# 样板
 
 <ItemImage id="crafting_pattern" scale="4" />
 
-Patterns are made in a <ItemLink id="pattern_encoding_terminal" /> out of blank patterns.
+样板在 <ItemLink id="pattern_encoding_terminal" /> 中由空白样板构成。
 
 There are several different types of pattern for different things:
 
