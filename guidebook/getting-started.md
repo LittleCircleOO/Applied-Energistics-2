@@ -1,80 +1,80 @@
 ---
 navigation:
-  title: Getting Started (1.20+)
+  title: 入门 (1.20+)
   position: 10
 ---
 
 <div class="notification is-info">
-  The following information only applies to Applied Energistics 2 in Minecraft 1.20 and newer.
+  以下信息仅适用于 Minecraft 1.20 及更新版本中的 应用能源 2 (AE2)。
 </div>
 
-# Getting Started
+# 入门
 
-## Getting The Initial Materials)
+## 获取初始材料
 
 <GameScene zoom="4" background="transparent">
   <ImportStructure src="assets/assemblies/meteor_interior.snbt" />
 </GameScene>
 
-To get started with Applied Energistics 2, one must first find a [meteorite](ae2-mechanics/meteorites.md). These are fairly common and tend to leave massive holes in the terrain, so you've probably encountered one in your travels.
-If you haven't, you can craft a <ItemLink id="meteorite_compass" />, which will point toward the nearest <ItemLink id="mysterious_cube" />.
+要开始发展应用能源 2 (AE2)，首先必须找到一块 [陨石](ae2-mechanics/meteorites.md)。这些陨石相当常见，往往会在地形上留下巨大的坑洞，所以你也许在旅途中遇到过。
+如果还没有，您可以制作一个 <ItemLink id="meteorite_compass" />, 它将指向最近的 <ItemLink id="mysterious_cube" />。
 
-Once you have found a meteorite, mine into its center. You will find certus quartz clusters, certus quartz buds, [budding certus blocks](items-blocks-machines/budding_certus.md) of various types, and a Mysterious Cube in the center.
+一旦您找到一颗陨石，请在陨石中心挖掘。你会发现赛特斯石英簇，赛特斯石英芽，各种类型的 [赛特斯石英母岩](items-blocks-machines/budding_certus.md)，以及中心的神秘方块。
 
-Mine the certus quartz clusters and any certus quartz blocks you find. You can also pick up the budding certus blocks, but without silk touch they will degrade by 1 tier.
+挖掘您发现的任何赛特斯石英簇和赛特斯石英块。您也可以采集赛特斯石英母岩，但如果没有精准采集附魔的工具，它们会退化 1 级。
 
-Do not break any flawless budding certus, as even with silk touch they will degrade to flawed budding certus, and it is impossible to repair them back to flawless.
+不要破坏任何无瑕的赛特斯石英母岩，因为即使用精准采集附魔的工具，它们也会退化成有瑕疵的赛特斯石英母岩，而且不可能将它们修复回无暇。
 
-Also mine the Mysterious Cube in the center of the meteorite to gain all 4 inscriber presses.
+还可以挖掘陨石中央的神秘方块，以获得全部 4 个压印模板。
 
-## Growing Certus Quartz
+## 培育赛特斯石英
 
 <GameScene zoom="4" background="transparent">
 <ImportStructure src="assets/assemblies/budding_certus_1.snbt" />
 </GameScene>
 
-Certus quartz buds will sprout from [budding certus blocks](items-blocks-machines/budding_certus.md), similar to amethyst. If you break a bud that is not finished
-growing, it will drop one <ItemLink id="certus_quartz_dust" />, unchanged by fortune. If you break a fully grown cluster, it will drop four
-<ItemLink id="certus_quartz_crystal" />s, and fortune will increase this number.
+赛特斯石英芽会从 [赛特斯石英母岩](items-blocks-machines/budding_certus.md)中萌发，与紫水晶类似。
+如果破坏一个尚未长成的石英芽，它将掉落一个 <ItemLink id="certus_quartz_dust" />，不受时运魔咒影响。
+如果破坏一簇完全长成的石英簇，则会掉落四个 <ItemLink id="certus_quartz_crystal" />，时运魔咒会增加掉落数量。
 
-There are 4 tiers of budding certus blocks: Flawless, Flawed, Chipped, and Damaged.
+赛特斯石英母岩有四个损坏等级：无瑕、有瑕疵、开裂和损坏。
 
 <GameScene zoom="4" background="transparent">
 <ImportStructure src="assets/assemblies/budding_blocks.snbt" />
 <IsometricCamera yaw="195" pitch="30" />
 </GameScene>
 
-Every time a bud grows by another stage, the budding block has a chance to degrade by one tier, eventually turning into
-a plain certus quartz block. They can be repaired (and new budding blocks created) by throwing the budding block (or a
-certus quartz block) in water with one or more <ItemLink id="charged_certus_quartz_crystal" />.
+每当一个石英芽生长到另一个阶段，石英母岩就有几率退化一级，最终变成一个普通的石英块。
+只要将石英母岩（或石英块）与一个或多个 <ItemLink id="charged_certus_quartz_crystal" /> 一起扔到水中，
+就能修复它们（或者生成新的石英母岩）。
 
 <RecipeFor id="damaged_budding_quartz" />
 
-Flawless budding certus blocks will not degrade and will generate certus infinitely. However they cannot be crafted or moved
-with a pickaxe, even with silk touch. (they *can* be moved with [spatial storage](ae2-mechanics/spatial-io.md) though)
+无瑕的赛特斯石英母岩不会退化，并能无限生成赛特斯石英。
+不过，它们无法制作或用镐采集，即使使用精准采集。(不过它们*可以*用 [空间存储](ae2-mechanics/spatial-io.md) 移动)
 
-By themselves, certus quartz buds grow very slowly. Luckily the <ItemLink id="growth_accelerator" /> massively
-accelerates this process when placed adjacent to the budding block. You should build a few of these as your first priority.
+就赛特斯石英芽本身而言，其生长速度非常缓慢。
+幸运的是，当 <ItemLink id="growth_accelerator" /> 放在石英母岩旁边时，会大大加快这一过程。您应该首先建造几个这样的装置。
 
 <GameScene zoom="4" background="transparent">
 <ImportStructure src="assets/assemblies/budding_certus_2.snbt" />
 <IsometricCamera yaw="195" pitch="30" />
 </GameScene>
 
-If you don't have enough quartz to also make an <ItemLink id="energy_acceptor" /> or <ItemLink id="vibration_chamber" />,
-you can make a <ItemLink id="crank" /> and stick it on the end of your accelerator.
+如果您没有足够的石英来制作 <ItemLink id="energy_acceptor" /> 或 <ItemLink id="vibration_chamber" />，
+您可以制作一个 <ItemLink id="crank" /> 并将其安装在催生器的末端。
 
-Harvesting the certus automatically is [described here](example-setups/simple-certus-farm.md).
+自动收获赛特斯石英请 [参阅此处](example-setups/simple-certus-farm.md)。
 
-## A Quick Aside on Fluix
+## 关于福鲁伊克斯水晶的题外话
 
-Another material you will need is Fluix, which you have already encountered in making growth accelerators. It is made by throwing charged certus, redstone, and nether quartz in water. Doing this automatically is "left as an exercise for the reader."
+您将会需要的另一种材料是福鲁伊克斯水晶，您在制作催生器时已经用到过。将充能赛特斯石英水晶、红石粉和下界石英投入水中即可制成。自动化这一过程“留待读者练习”。
 
-The <ItemLink id="charger" /> is required to produce <ItemLink id="charged_certus_quartz_crystal" />., if you haven't made one already.
+<ItemLink id="charger" /> 是制作 <ItemLink id="charged_certus_quartz_crystal" /> 所必需的，如果您还没有充能器，则需要制作一个。
 
-## Inscribing Some Processors
+## 压印一些处理器
 
-In your looting of a meteorite, you will have found four "presses" from breaking the Mysterious Cube. These are used in the <ItemLink id="inscriber" /> to make the three types of processor.
+在您采集陨石的过程中，您会发现有四个“压印模板”是在破坏神秘方块后找到的。在 <ItemLink id="inscriber" /> 中，它们被用来制作三种处理器。
 
 <ItemGrid>
   <ItemIcon id="silicon_press" />
@@ -86,22 +86,22 @@ In your looting of a meteorite, you will have found four "presses" from breaking
   <ItemIcon id="engineering_processor_press" />
 </ItemGrid>
 
-The inscriber is a sided machine, much like the vanilla furnace. Inserting from the top or bottom places items in the top or bottom slots, and inserting from the side or back inserts into the center slot. Results can be pulled from the side or back.
+压印器是一个“多面交互”机器，就像原版熔炉一样。从顶部或底部输入时，物品会被放入顶部或底部的插槽中，而从侧面或背面输入时，物品会被放入中间的插槽中。产物可以从侧面或背面提取。
 
-To facilitate automation with hoppers (and possibly reduce pipe spaghetti), inscribers can be rotated with a <ItemLink id="certus_quartz_wrench" />.
+为便于使用漏斗实现自动化（并尽可能减轻管线杂乱），可使用 <ItemLink id="certus_quartz_wrench" /> 旋转压印器。
 
-Produce a few of each type of processor in preparation for the next step, making a very basic ME system. Automating processor production is "[left as an exercise for the reader](example-setups/processor-automation.md)".
+每种类型的处理器都制作一些，为下一步构建一个非常基本的 ME 系统做准备。处理器生产自动化“[留作读者练习](example-setups/processor-automation.md)”。
 
-## Matter Energy Tech: ME Networks and Storage
+## 物质能量技术：ME 网络和存储
 
-### What is ME Storage?
+### 什么是 ME 存储?
 
-Its pronounced Emm-Eee, and stands for Matter Energy.
+它的发音是 Emm-Eee，代表物质能量 (Matter Energy)。
 
-Matter Energy is the main component of Applied Energistics 2, it's like a mad scientist version of a Multi-Block chest,
-and it can revolutionize your storage situation. ME is extremely different than other storage systems in Minecraft, and
-it might take a little out of the box thinking to get used to; but once you get started vast amounts of storage in tiny
-space, and multiple access terminals are just the tip of the iceberg of what becomes possible.
+物质能量 (ME) 是 应用能源 2 (AE2) 的主要组成部分，
+它就像是疯狂科学家版的多方块箱子，可以彻底改变你的存储情况。
+ME 与 Minecraft 中的其他存储系统极为不同，可能需要一点发散性思维才能适应；
+但一旦你开始使用，在狭小空间中的大量存储和多重访问终端只是可能实现的冰山一角。
 
 ### What do I need to know to get started?
 
