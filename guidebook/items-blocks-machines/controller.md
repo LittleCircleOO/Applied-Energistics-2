@@ -10,7 +10,7 @@ item_ids:
 - ae2:controller
 ---
 
-# The Controller
+# 控制器
 
 <BlockImage id="controller" p:state="online" scale="8" />
 
@@ -44,6 +44,6 @@ item_ids:
 满足所有规则并接上电力后，控制器会发光并循环变色。
 
 可以右键控制器以获得与<ItemLink id="network_tool" />相同的界面。
-## Recipe
+## 合成 
 
 <RecipeFor id="controller" />
