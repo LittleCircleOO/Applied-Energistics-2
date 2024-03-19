@@ -14,40 +14,36 @@ item_ids:
 
 <BlockImage id="controller" p:state="online" scale="8" />
 
-The controller is the routing hub of a [ME Network](../ae2-mechanics/me-network-connections.md).
-Without it, a network is "ad-hoc" and can only have a max of 8 channel-using [devices](../ae2-mechanics/devices.md) total.
+控制器相当于[ ME 网络](../ae2-mechanics/me-network-connections.md)的集线器。 
+如果没有控制器，网络就是“临时”的，且最多只能有总共 8 台[设备](../ae2-mechanics/devices.md)使用通道。 
 
-It is not possible to have 2 controllers in one [ME Network](../ae2-mechanics/me-network-connections.md).
+同一个[ ME 网络](../ae2-mechanics/me-network-connections.md)中不能有多个控制器。  
 
-The controller provides 32 [Channels](../ae2-mechanics/channels.md) per face.
+控制器的每个面提供 32 个[通道](../ae2-mechanics/channels.md)。  
 
-The controller requires 6 AE/t per controller block to
-function. Each controller block can store 8000 AE, so larger networks might require additional
-energy storage. See [energy](../ae2-mechanics/energy.md) for details.
+控制器需要每个控制器方块 6 AE/t 的能量供应才能正常工作。每个控制器方块能够存储 8000 AE，因此更大的网络可能需要额外的能量存储。
+详细信息请参阅[能量](../ae2-mechanics/energy.md)。  
 
-Multiblock Controllers can be built in a fairly free form.
+可以以相当自由的形式搭建多方块结构的控制器
 
 <GameScene zoom="2" background="transparent">
   <ImportStructure src="../assets/assemblies/controllers.snbt" />
   <IsometricCamera yaw="195" pitch="30" />
 </GameScene>
 
-However, there are a few rules that must be followed:
+但是必须遵守以下规则：  
 
-1.  All controller blocks on a [ME Network](../ae2-mechanics/me-network-connections.md) must be connected; else the blocks will turn red.
-2.  The size of the controller must be within 7x7x7; else it will turn red.
-3.  A controller can have 2 adjacent blocks in at most 1 axis; if a block violates this rule, it will disable and turn red.
-
+1.  [ME 网络](../ae2-mechanics/me-network-connections.md)上的所有控制器方块必须相连，否则方块会变成红色。  
+2.  控制器结构必须在 7x7x7 大小范围内，否则方块会变成红色。 
+3.  一个控制器方块最多在 1 个轴上有 2 个相邻的方块，如果有方块违反这个规则，则会被禁用并变成红色。
 <GameScene zoom="2" background="transparent">
   <ImportStructure src="../assets/assemblies/controller_rules.snbt" />
   <IsometricCamera yaw="195" pitch="30" />
 </GameScene>
 
-As long as all rules are followed and powered, the controller should glow and
-cycle colors.
+满足所有规则并接上电力后，控制器会发光并循环变色。
 
-You can right-click on a controller to get the same GUI as a <ItemLink id="network_tool" />
-
+可以右键控制器以获得与<ItemLink id="network_tool" />相同的界面。
 ## Recipe
 
 <RecipeFor id="controller" />
