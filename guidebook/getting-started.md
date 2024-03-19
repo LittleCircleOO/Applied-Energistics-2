@@ -17,11 +17,11 @@ navigation:
 </GameScene>
 
 要开始发展应用能源 2 (AE2)，首先必须找到一块 [陨石](ae2-mechanics/meteorites.md)。这些陨石相当常见，往往会在地形上留下巨大的坑洞，所以你也许在旅途中遇到过。
-如果还没有，您可以制作一个 <ItemLink id="meteorite_compass" />, 它将指向最近的 <ItemLink id="mysterious_cube" />。
+如果还没有，你可以制作一个 <ItemLink id="meteorite_compass" />, 它将指向最近的 <ItemLink id="mysterious_cube" />。
 
-一旦您找到一颗陨石，请在陨石中心挖掘。你会发现赛特斯石英簇，赛特斯石英芽，各种类型的 [赛特斯石英母岩](items-blocks-machines/budding_certus.md)，以及中心的神秘方块。
+一旦你找到一颗陨石，请在陨石中心挖掘。你会发现赛特斯石英簇，赛特斯石英芽，各种类型的 [赛特斯石英母岩](items-blocks-machines/budding_certus.md)，以及中心的神秘方块。
 
-挖掘您发现的任何赛特斯石英簇和赛特斯石英块。您也可以采集赛特斯石英母岩，但如果没有精准采集附魔的工具，它们会退化 1 级。
+挖掘你发现的任何赛特斯石英簇和赛特斯石英块。你也可以采集赛特斯石英母岩，但如果没有精准采集附魔的工具，它们会退化 1 级。
 
 不要破坏任何无瑕的赛特斯石英母岩，因为即使用精准采集附魔的工具，它们也会退化成有瑕疵的赛特斯石英母岩，而且不可能将它们修复回无暇。
 
@@ -54,27 +54,27 @@ navigation:
 不过，它们无法制作或用镐采集，即使使用精准采集。(不过它们*可以*用 [空间存储](ae2-mechanics/spatial-io.md) 移动)
 
 就赛特斯石英芽本身而言，其生长速度非常缓慢。
-幸运的是，当 <ItemLink id="growth_accelerator" /> 放在石英母岩旁边时，会大大加快这一过程。您应该首先建造几个这样的装置。
+幸运的是，当 <ItemLink id="growth_accelerator" /> 放在石英母岩旁边时，会大大加快这一过程。你应该首先建造几个这样的装置。
 
 <GameScene zoom="4" background="transparent">
 <ImportStructure src="assets/assemblies/budding_certus_2.snbt" />
 <IsometricCamera yaw="195" pitch="30" />
 </GameScene>
 
-如果您没有足够的石英来制作 <ItemLink id="energy_acceptor" /> 或 <ItemLink id="vibration_chamber" />，
-您可以制作一个 <ItemLink id="crank" /> 并将其安装在催生器的末端。
+如果你没有足够的石英来制作 <ItemLink id="energy_acceptor" /> 或 <ItemLink id="vibration_chamber" />，
+你可以制作一个 <ItemLink id="crank" /> 并将其安装在催生器的末端。
 
 自动收获赛特斯石英请 [参阅此处](example-setups/simple-certus-farm.md)。
 
 ## 关于福鲁伊克斯水晶的题外话
 
-您将会需要的另一种材料是福鲁伊克斯水晶，您在制作催生器时已经用到过。将充能赛特斯石英水晶、红石粉和下界石英投入水中即可制成。自动化这一过程“留待读者练习”。
+你将会需要的另一种材料是福鲁伊克斯水晶，其在制作催生器时已经用到过。将充能赛特斯石英水晶、红石粉和下界石英投入水中即可制成。自动化这一过程“留待读者练习”。
 
-<ItemLink id="charger" /> 是制作 <ItemLink id="charged_certus_quartz_crystal" /> 所必需的，如果您还没有充能器，则需要制作一个。
+<ItemLink id="charger" /> 是制作 <ItemLink id="charged_certus_quartz_crystal" /> 所必需的，如果你还没有充能器，则需要制作一个。
 
 ## 压印一些处理器
 
-在您采集陨石的过程中，您会发现有四个“压印模板”是在破坏神秘方块后找到的。在 <ItemLink id="inscriber" /> 中，它们被用来制作三种处理器。
+在你采集陨石的过程中，你会发现有四个“压印模板”是在破坏神秘方块后找到的。在 <ItemLink id="inscriber" /> 中，它们被用来制作三种处理器。
 
 <ItemGrid>
   <ItemIcon id="silicon_press" />
@@ -103,65 +103,62 @@ navigation:
 ME 与 Minecraft 中的其他存储系统极为不同，可能需要一点发散性思维才能适应；
 但一旦你开始使用，在狭小空间中的大量存储和多重访问终端只是可能实现的冰山一角。
 
-### What do I need to know to get started?
+### 我需要知道哪些入门知识?
 
-First, ME Stores items inside of other items, called [Storage cells](items-blocks-machines/storage_cells.md); there are 5 tiers with ever increasing amounts of
-storage. In order to use a Storage Cell it must be placed inside either an <ItemLink id="chest" />,
-or an <ItemLink id="drive" />.
+首先，ME 将物品储存在其他物品内部，称为 [存储元件](items-blocks-machines/storage_cells.md)；存储元件共有 5 级，存储量逐级递增。
+要使用存储元件，必须将其放置在 <ItemLink id="chest" />
+或 <ItemLink id="drive" /> 中。
 
-The <ItemLink id="chest" /> shows you the contents of the Cell as soon as its placed inside, and you
-can add and remove items from it as if it were a <ItemLink id="minecraft:chest" />, with the exception that the items are
-actually stored in the Storage cells, and not the <ItemLink id="chest" /> itself.
+只要将存储元件放入 <ItemLink id="chest" /> 中，ME 箱子就会显示存储元件中的内容，你还可以向其添加或移除物品，
+就像 <ItemLink id="minecraft:chest" /> 一样，不同的是，物品实际上存储在存储元件中，
+而不是 <ItemLink id="chest" /> 本身。
 
-The <ItemLink id="chest" /> is quite situational and limited in utility. To really
-take advantage of AE2, you need to set up an [ME Network](ae2-mechanics/me-network-connections.md).
+The <ItemLink id="chest" /> 的功能非常有限，只能在特定情况下使用。
+要真正利用 AE2 的优势，你需要建立一个 [ME 网络](ae2-mechanics/me-network-connections.md)。
 
-## Your Very First ME System
+## 你的第一个 ME 系统
 
-Now that you have all of the basic materials and machines for Applied Energistics 2, you can make your first ME (Matter Energy) system. This will be a very basic one, no autocrafting, no logistics, just nice, simple, searchable storage.
+现在你已经拥有了应用能源 2 的所有基本材料和机器，你可以制作第一个 ME（物质能量）系统了。这将是一个非常基本的系统，没有自动制造，没有物流，只有漂亮、简单、可搜索的存储。
 
 <GameScene zoom="6" interactive={true}>
 <ImportStructure src="assets/assemblies/tiny_me_system.snbt" />
 
 </GameScene>
 
-*   Your ingredients list:
+*   材料清单:
     * 1x <ItemLink id="drive" />
-    * 1x <ItemLink id="terminal" /> or <ItemLink id="crafting_terminal" />
+    * 1x <ItemLink id="terminal" /> 或者 <ItemLink id="crafting_terminal" />
     * 1x <ItemLink id="energy_acceptor" />
-    * A few [cables](items-blocks-machines/cables.md), either glass, covered, or smart, but not dense
-    * A few [storage cells](items-blocks-machines/storage_cells.md), recommended of the 4k variety for a good mix of
-    capacity and types (it would be more efficient to [partition](items-blocks-machines/cell_workbench.md) a mix of 4k and 1k but that's a complexity we won't go into now)
+    * 若干 [线缆](items-blocks-machines/cables.md)，玻璃线缆，包层线缆或智能线缆，但不是致密线缆
+    * 若干 [存储元件](items-blocks-machines/storage_cells.md)，建议使用 4k 存储元件，以实现容量和类型的良好组合
+    （4k 和 1k 混合 [分区](items-blocks-machines/cell_workbench.md) 会更有效，但这是一个复杂的问题，我们现在就不讨论了）
 ---
-1.  Place the drive down.
-2.  The energy acceptor (and several other AE2 [devices](ae2-mechanics/devices.md)) comes in 2 modes, cube and flat. They can be switched between in a crafting grid. If your energy acceptor is a cube, place it down next to the drive. If it's a flat square, place a cable on the drive and place the acceptor on that.
-3.  Run energy into the energy acceptor with a cable/pipe/conduit from your favorite energy-generation mod.
-4.  Place a cable on top of the drive (or otherwise at eye level) and place your terminal or crafting terminal on it.
-5.  Put your storage cells into the drive
-6.  Profit
-7.  Fiddle with the terminal's settings
-8.  Bask in your ultimate power and ability
-9.  Realize that this network is, in the grand scheme, rather small
+1.  放置驱动器。
+2.  能源接收器（以及其他几种 AE2 [设备](ae2-mechanics/devices.md)）有两种模式，方块和平面。它们可以在合成槽中进行转换。如果你的能源接收器是方块，就把它放在驱动器旁边。如果是平面，则在驱动器上放置一根电缆，然后将接受器放在电缆上。
+3.  用电缆/管道/导管将能量从你最喜欢的能量发生器输入能源接收器。
+4.  将线缆放在驱动器顶部（或与视线水平的位置），然后将终端或合成终端放在上面。
+5.  将存储元件放入驱动器。
+6.  享受。
+7.  摆弄终端设置。
+8.  尽情享受你的终极力量和能力。
+9.  意识到从总体来看，这个网络非常小。
 
-### Expanding your Network
+### 扩展你的网络
 
-So you have some basic storage, and access to that storage, it's a good start, but you'll likely be looking to maybe
-automate some processing.
+这样你就有了一些基本的存储空间，并可以访问这些存储空间，
+这是一个良好的开端，但你很可能会寻求一些自动化处理。
 
-A great example of this is to place a <ItemLink id="export_bus" /> on the top of a furnace to
-dump in ores, and a <ItemLink id="import_bus" />
-on the bottom of the furance to extract furnaced ores.
+一个很好的例子是
+在熔炉顶部放置一个 <ItemLink id="export_bus" /> 来供给矿石，
+在熔炉底部放置一个 <ItemLink id="import_bus" /> 来提取烧炼后的矿石。
 
-The <ItemLink id="export_bus" /> lets you export items from the network, into the attached
-inventory, while the <ItemLink id="import_bus" /> imports items from the attached inventory into
-the network.
+<ItemLink id="export_bus" /> 可将物品从网络导出到其贴靠的容器，
+而 <ItemLink id="import_bus" /> 可将物品从其贴靠的容器导入网络。
 
-### Overcoming Limits
+### 克服限制
 
-At this point you probably getting close to 8 or so [devices](ae2-mechanics/devices.md), once you hit 9 devices you'll have to start
-managing [channels](ae2-mechanics/channels.md). Many devices but not all, require a channel to
-function.
+此时，你可能拥有接近 8 个左右的 [设备](ae2-mechanics/devices.md)，一旦达到 9 个设备，你就必须开始管理
+[频道](ae2-mechanics/channels.md)。许多设备需要频道才能运行，但并非所有设备都是如此。
 
-By default a network can support 8 channels, once you break this limit, you'll have to add
-an <ItemLink id="controller" /> to your network. this allows you to expand your network greatly.
-[Smart cables](items-blocks-machines/cables.md) will allow you to see how channels are routed through your network. Use them extensively when starting out to learn how channels act, or if you have a lot of redstone and glowstone.
+默认情况下，一个网络可支持 8 个频道，一旦超过这一限制，就必须在网络中添加 <ItemLink id="controller" />，这样就可以大大扩展网络。
+[智能线缆](items-blocks-machines/cables.md) 可以让你查看频道在网络中的路由情况。在刚开始了解频道的作用时，或者在拥有大量红石粉和荧石粉的情况下，可以广泛使用它们。
