@@ -22,7 +22,7 @@ navigation:
 * [提示与技巧](tips-and-tricks.md)
 * [AE2 机制](ae2-mechanics/ae2-mechanics-index.md)
 * [示例装置](example-setups/example-setups-index.md)
-* [物品, 方块与机械](items-blocks-machines/items-blocks-machines-index.md)
+* [物品, 方块与机器](items-blocks-machines/items-blocks-machines-index.md)
 
 <GameScene zoom="4" interactive={true}>
   <ImportStructure src="assets/assemblies/autocraft_setup_greebles.snbt" />
