@@ -1,11 +1,11 @@
 ---
 navigation:
   parent: ae2-mechanics/ae2-mechanics-index.md
-  title: Bytes and Types
+  title: 字节和类型
   icon: creative_storage_cell
 ---
 
-# Bytes and Types
+# 字节和类型
 
 <Row>
     <ItemImage id="item_storage_cell_1k" scale="4" />
@@ -19,60 +19,55 @@ navigation:
     <ItemImage id="item_storage_cell_256k" scale="4" />
   </Row>
 
-[Storage Cells](../items-blocks-machines/storage_cells.md) are defined by both *bytes* and *types*. Bytes, like in
-your actual computer, are a measure of the total amount of "stuff" in a storage cell. Types are a measure of how many different,
-well, *types* of things are stored in a cell. Each type represents a unique item, so 4,096 cobblestone is 1 type but 16 different
-swords with different enchantments are 16 types.
+[存储元件](../items-blocks-machines/storage_cells.md) 是由*字节*和*类型*定义的。
+字节，就像在实际计算机中一样，是存储元件中“内容”总量的度量。
+类型是衡量一个元件中存储了多少种不同类型的东西。
+每种类型代表一种独特的物品，因此 4096 块圆石是 1 种类型，而 16 把附有不同魔咒的剑则是 16 种类型。
 
-Each storage cell can store a fixed amount
-of data. Each type consumes a number of bytes upfront (which varies with the cell
-size), and each item consumes one bit of storage, so eight items consume one
-byte, and a full stack of 64 consumes 8 bytes, regardless of how the item
-would stack outside an ME network. For instance, 64 identical saddles don't
-take up more space than 64 stone.
+每个存储元件可存储固定数量的数据。
+每种类型消耗一定数量的字节（随元件大小而变化），每个物品消耗 1 比特的存储空间，因此 8 个物品消耗 1 字节，而一个完整的 64 堆叠消耗 8 字节，无论物品在 ME 网络外如何堆叠。
+例如，64 个相同的鞍不会比 64 个石头占用更多空间。
 
-Again, each item is 1 bit, so 8 items equals 1 byte. For fluid cells, this is 8 buckets per byte.
+同样，每个物品为 1 比特，因此 8 个物品等于 1 字节。对于流体元件来说，每字节就是 8 桶。
 
-Many people complain about the limited number of types a cell can hold, but they are a ***neccessary limitation***.
-Cells store their data in an NBT tag on the item itself, which makes them rather stable. However, this means putting too much
-data on a cell can cause too much data to be sent to a player, causing an effect similar to "Book Banning" in vanilla minecraft.
-Additionally, having too many different types in your system increases the load on sorting and item handling. However, this
-limitation does not end up being very restrictive. One <ItemLink id="drive" /> bay full of cells is 630 types which is actually
-quite a lot as long as you don't store loads of unique unstackable items.
+很多人抱怨元件所能容纳的类型数量有限，但它们是***必要的限制***
+元件将数据存储在物品本身的 NBT 标签中，这使得它们相当稳定。
+不过，这意味着在一个元件上放置过多数据会导致向玩家发送过多数据，造成类似于原版 Minecraft 中“禁人书”的效果。
+此外，系统中的不同类型过多会增加分类和物品处理的负担。
+不过，这种限制最终并不会造成很大的限制。
+一个装满存储元件的 <ItemLink id="drive" /> 有 630 种类型，只要您不存储大量独特的不可堆叠物品，这实际上已经很多了。
 
-For this reason, types exist to "firmly discourage" you from dumping the hundreds of randomly damaged armor and tools from
-a mob farm directly into your ME system. Each armor piece with unique damage and enchantments has to be stored as a separate entry,
-causing bloat. it is recommended to filter them out of the item stream before they touch your system.
+正因如此，类型的存在是为了“坚决阻止”您将数百件随机损坏的盔甲和工具从刷怪塔直接倒入您的 ME 系统。
+每件具有独特耐久度和附魔的盔甲都必须作为单独的条目存储，从而造成臃肿。
+建议在接触系统之前将其从物品流中过滤掉。
 
-Gunning straight for top tier storage cells is generally not the best idea,
-since you use more resources but don't get any extra type storage. This means that all sizes of cell are still useful even
-lategame, as they have tradeoffs.
+直接使用顶级存储元件通常不是最好的办法，因为这样会消耗更多资源，却不会获得额外的类型容量。
+这意味着，即使在游戏后期，各种大小的存储元件仍然有用，因为它们各有利弊。
 
-Below is a table comparing the different tiers of storage cells, how much they store, and
-a rough estimate of their cost.
+下面的表格比较了不同等级的存储元件、它们的容量以及对其成本的粗略估算。
 
-## Storage Cell Contents Vs Cost
+## 存储元件容量与成本
 
-| Cell                                     |   Bytes | Types | Bytes Per Type | Certus | Redstone | Gold | Glowstone |
-| ---------------------------------------- | ------: | ----: | -------------: | -----: | -------: | ---: | --------: |
-| <ItemLink id="item_storage_cell_1k" />   |   1,024 |    63 |              8 |      4 |        5 |    1 |         0 |
-| <ItemLink id="item_storage_cell_4k" />   |   4,096 |    63 |             32 |  14.25 |       20 |    3 |         0 |
-| <ItemLink id="item_storage_cell_16k" />  |  16,384 |    63 |            128 |     45 |       61 |    9 |         4 |
-| <ItemLink id="item_storage_cell_64k" />  |  65,536 |    63 |            512 | 137.25 |      184 |   27 |        16 |
-| <ItemLink id="item_storage_cell_256k" /> | 262,144 |    63 |           2048 |    414 |      553 |   81 |        48 |
+| 存储元件                                   |     字节 | 类型 | 每类型字节数 | 赛特斯石英水晶 | 红石粉 | 金锭 | 荧石粉 |
+|------------------------------------------|--------:|---:|---------:|--------:|----:|---:|----:|
+| <ItemLink id="item_storage_cell_1k" />   |   1,024 | 63 |        8 |       4 |   5 |  1 |   0 |
+| <ItemLink id="item_storage_cell_4k" />   |   4,096 | 63 |       32 |   14.25 |  20 |  3 |   0 |
+| <ItemLink id="item_storage_cell_16k" />  |  16,384 | 63 |      128 |      45 |  61 |  9 |   4 |
+| <ItemLink id="item_storage_cell_64k" />  |  65,536 | 63 |      512 |  137.25 | 184 | 27 |  16 |
+| <ItemLink id="item_storage_cell_256k" /> | 262,144 | 63 |     2048 |     414 | 553 | 81 |  48 |
 
-## Storage Capacity with Varying Type Count
+## 不同类型数的存储容量
 
-The upfront cost of types is such that a cell holding 1 type can hold 2x as much as a cell with all 63 types in use.
+类型的前置开销是这样的：容纳 1 个类型的存储元件所能容纳的物品数量是容纳全部 63 个类型的存储元件的 2 倍。
 
-| Cell                                     | Total Capacity of Cell With 1 Type In Use | Total Capacity of Cell With 63 Types In Use |
-| ---------------------------------------- | ----------------------------------------: | ------------------------------------------: |
-| <ItemLink id="item_storage_cell_1k" />   |                                     8,128 |                                       4,160 |
-| <ItemLink id="item_storage_cell_4k" />   |                                    32,512 |                                      16,640 |
-| <ItemLink id="item_storage_cell_16k" />  |                                   130,048 |                                      66,560 |
-| <ItemLink id="item_storage_cell_64k" />  |                                   520,192 |                                     266,240 |
-| <ItemLink id="item_storage_cell_256k" /> |                                 2,080,768 |                                   1,064,960 |
+| 存储元件                                  | 使用 1 种类型时的存储元件总容量 | 使用 63 种类型时的存储元件总容量 |
+|------------------------------------------|------------------:|-------------------:|
+| <ItemLink id="item_storage_cell_1k" />   |             8,128 |              4,160 |
+| <ItemLink id="item_storage_cell_4k" />   |            32,512 |             16,640 |
+| <ItemLink id="item_storage_cell_16k" />  |           130,048 |             66,560 |
+| <ItemLink id="item_storage_cell_64k" />  |           520,192 |            266,240 |
+| <ItemLink id="item_storage_cell_256k" /> |         2,080,768 |          1,064,960 |
 
-![A Cell With 1 Type](../assets/diagrams/1_type_cell.png)
+![一个存储了一种类型的存储元件](../assets/diagrams/1_type_cell.png)
 
-![A Cell With 63 Types](../assets/diagrams/63_type_cell.png)
+![一个存储了63种类型的存储元件](../assets/diagrams/63_type_cell.png)
