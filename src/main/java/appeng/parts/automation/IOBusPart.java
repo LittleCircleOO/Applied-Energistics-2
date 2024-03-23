@@ -18,6 +18,8 @@
 
 package appeng.parts.automation;
 
+import java.util.Set;
+
 import org.jetbrains.annotations.Nullable;
 
 import net.minecraft.core.BlockPos;
@@ -42,7 +44,7 @@ import appeng.api.networking.ticking.TickRateModulation;
 import appeng.api.networking.ticking.TickingRequest;
 import appeng.api.parts.IPartItem;
 import appeng.api.parts.IPartModel;
-import appeng.api.storage.AEKeyFilter;
+import appeng.api.stacks.AEKeyType;
 import appeng.api.storage.ISubMenuHost;
 import appeng.api.util.AECableType;
 import appeng.api.util.IConfigManager;
@@ -86,11 +88,12 @@ public abstract class IOBusPart extends UpgradeablePart implements IGridTickable
      */
     private boolean pendingPulse = false;
 
-    public IOBusPart(TickRates tickRates, @Nullable AEKeyFilter filter, IPartItem<?> partItem) {
+    public IOBusPart(TickRates tickRates, Set<AEKeyType> supportedKeyTypes, IPartItem<?> partItem) {
         super(partItem);
         this.tickRates = tickRates;
         this.source = new MachineSource(this);
-        this.config = ConfigInventory.configTypes(filter, 63, this::updateState);
+        this.config = ConfigInventory.configTypes(63).supportedTypes(supportedKeyTypes)
+                .changeListener(this::updateState).build();
         getMainNode().addService(IGridTickable.class, this);
 
         this.getConfigManager().registerSetting(Settings.REDSTONE_CONTROLLED, RedstoneMode.IGNORE);

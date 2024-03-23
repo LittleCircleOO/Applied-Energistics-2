@@ -22,7 +22,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.function.Predicate;
 
 import com.google.common.base.Preconditions;
 
@@ -43,12 +42,14 @@ import it.unimi.dsi.fastutil.objects.Object2IntOpenHashMap;
 
 import appeng.api.inventories.ISegmentedInventory;
 import appeng.api.inventories.InternalInventory;
+import appeng.api.networking.energy.IEnergySource;
 import appeng.api.stacks.AEItemKey;
 import appeng.api.storage.ITerminalHost;
 import appeng.core.network.NetworkHandler;
 import appeng.core.network.serverbound.InventoryActionPacket;
 import appeng.helpers.IMenuCraftingPacket;
 import appeng.helpers.InventoryAction;
+import appeng.me.storage.LinkStatusRespectingInventory;
 import appeng.menu.SlotSemantics;
 import appeng.menu.implementations.MenuTypeBuilder;
 import appeng.menu.me.common.MEStorageMenu;
@@ -96,13 +97,19 @@ public class CraftingTermMenu extends MEStorageMenu implements IMenuCraftingPack
                     SlotSemantics.CRAFTING_GRID);
         }
 
+        var linkStatusInventory = new LinkStatusRespectingInventory(host.getInventory(), this::getLinkStatus);
         this.addSlot(this.outputSlot = new CraftingTermSlot(this.getPlayerInventory().player, this.getActionSource(),
-                this.energySource, host.getInventory(), craftingGridInv, craftingGridInv, this),
+                this.energySource, linkStatusInventory, craftingGridInv, craftingGridInv, this),
                 SlotSemantics.CRAFTING_RESULT);
 
         updateCurrentRecipeAndOutput(true);
 
         registerClientAction(ACTION_CLEAR_TO_PLAYER, this::clearToPlayerInventory);
+    }
+
+    @Override
+    public IEnergySource getEnergySource() {
+        return this.energySource;
     }
 
     /**
@@ -169,12 +176,12 @@ public class CraftingTermMenu extends MEStorageMenu implements IMenuCraftingPack
     }
 
     @Override
-    public boolean hasIngredient(Predicate<ItemStack> predicate, Object2IntOpenHashMap<Object> reservedAmounts) {
+    public boolean hasIngredient(Ingredient ingredient, Object2IntOpenHashMap<Object> reservedAmounts) {
         // In addition to the base item repo, also check the crafting grid if it
         // already contains some of the needed items
         for (var slot : getSlots(SlotSemantics.CRAFTING_GRID)) {
             var stackInSlot = slot.getItem();
-            if (!stackInSlot.isEmpty() && predicate.test(stackInSlot)) {
+            if (!stackInSlot.isEmpty() && ingredient.test(stackInSlot)) {
                 var reservedAmount = reservedAmounts.getOrDefault(slot, 0);
                 if (stackInSlot.getCount() > reservedAmount) {
                     reservedAmounts.merge(slot, 1, Integer::sum);
@@ -184,7 +191,7 @@ public class CraftingTermMenu extends MEStorageMenu implements IMenuCraftingPack
 
         }
 
-        return super.hasIngredient(predicate, reservedAmounts);
+        return super.hasIngredient(ingredient, reservedAmounts);
     }
 
     /**

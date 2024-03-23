@@ -102,8 +102,9 @@ public class InterfaceLogic implements ICraftingRequester, IUpgradeableObject, I
 
     public InterfaceLogic(IManagedGridNode gridNode, InterfaceLogicHost host, Item is, int slots) {
         this.host = host;
-        this.config = ConfigInventory.configStacks(null, slots, this::onConfigRowChanged, false);
-        this.storage = ConfigInventory.storage(slots, this::onStorageChanged);
+        this.config = ConfigInventory.configStacks(slots).changeListener(this::onConfigRowChanged).build();
+        this.storage = ConfigInventory.storage(slots).slotFilter(this::isAllowedInStorageSlot)
+                .changeListener(this::onStorageChanged).build();
         this.mainNode = gridNode
                 .setFlags(GridFlags.REQUIRE_CHANNEL)
                 .addService(IGridTickable.class, new Ticker());
@@ -119,6 +120,14 @@ public class InterfaceLogic implements ICraftingRequester, IUpgradeableObject, I
 
         getConfig().useRegisteredCapacities();
         getStorage().useRegisteredCapacities();
+    }
+
+    private boolean isAllowedInStorageSlot(int slot, AEKey what) {
+        if (slot < config.size()) {
+            var configured = config.getKey(slot);
+            return configured == null || configured.equals(what);
+        }
+        return true;
     }
 
     public int getPriority() {
