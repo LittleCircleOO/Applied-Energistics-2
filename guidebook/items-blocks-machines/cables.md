@@ -161,8 +161,8 @@ item_ids:
   <IsometricCamera yaw="195" pitch="30" /> 
 </GameScene>
 
-更大容量的线缆。相较于其他只能承载 8 个通道的普通线缆，致密线缆可以承载 32 个通道。致密线缆不支持总线，
-所以在使用总线或者面板之前，你需要从致密线缆降级至更小的线缆（例如<ItemLink id="fluix_glass_cable" />和<ItemLink id="fluix_smart_cable" />。  
+更大容量的线缆。相较于其他只能承载 8 个频道的普通线缆，致密线缆可以承载 32 个频道。致密线缆不支持总线，
+所以在使用总线或者面板之前，你需要从致密线缆降级至更小的线缆（例如<ItemLink id="fluix_glass_cable" />或<ItemLink id="fluix_smart_cable" />。  
 
 致密线缆轻量重写了频道的“最短路径”行为。频道会先使用到达致密线缆的最短路径，然后使用通过致密线缆到达 ME 控制器的最短路径。 
 
