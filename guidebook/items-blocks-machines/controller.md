@@ -14,8 +14,8 @@ item_ids:
 
 <BlockImage id="controller" p:state="online" scale="8" />
 
-控制器相当于[ ME 网络](../ae2-mechanics/me-network-connections.md)的集线器。 
-如果没有控制器，网络就是“临时”的，且最多只能有总共 8 台[设备](../ae2-mechanics/devices.md)使用通道。 
+控制器相当于 [ME 网络](../ae2-mechanics/me-network-connections.md) 的集线器。
+如果没有控制器，网络就是“临时”的，且最多只能有总共 8 台 [设备](../ae2-mechanics/devices.md) 使用频道。
 
 同一个[ ME 网络](../ae2-mechanics/me-network-connections.md)中不能有多个控制器。  
 
