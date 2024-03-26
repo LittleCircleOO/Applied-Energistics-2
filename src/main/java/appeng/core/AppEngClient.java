@@ -20,11 +20,13 @@ package appeng.core;
 
 import java.util.Objects;
 
+import com.mojang.blaze3d.platform.InputConstants;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import net.minecraft.client.KeyMapping;
 import net.minecraft.client.Minecraft;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
@@ -32,6 +34,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.HitResult;
 import net.neoforged.api.distmarker.Dist;
@@ -51,12 +54,12 @@ import net.neoforged.neoforge.client.event.RegisterColorHandlersEvent;
 import net.neoforged.neoforge.client.event.RegisterDimensionSpecialEffectsEvent;
 import net.neoforged.neoforge.client.event.RegisterKeyMappingsEvent;
 import net.neoforged.neoforge.client.event.RegisterParticleProvidersEvent;
+import net.neoforged.neoforge.client.settings.KeyConflictContext;
 import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.event.TickEvent;
 import net.neoforged.neoforge.event.server.ServerStartingEvent;
 
 import appeng.api.parts.CableRenderMode;
-import appeng.api.parts.PartHelper;
 import appeng.client.EffectType;
 import appeng.client.Hotkeys;
 import appeng.client.commands.ClientCommands;
@@ -77,6 +80,7 @@ import appeng.client.render.StorageCellClientTooltipComponent;
 import appeng.client.render.effects.EnergyParticleData;
 import appeng.client.render.effects.ParticleTypes;
 import appeng.client.render.overlay.OverlayManager;
+import appeng.core.definitions.AEBlocks;
 import appeng.core.network.NetworkHandler;
 import appeng.core.network.serverbound.MouseWheelPacket;
 import appeng.helpers.IMouseWheelItem;
@@ -98,7 +102,6 @@ import appeng.items.storage.StorageCellTooltipComponent;
 import appeng.siteexport.SiteExporter;
 import appeng.spatial.SpatialStorageDimensionIds;
 import appeng.spatial.SpatialStorageSkyProperties;
-import appeng.util.InteractionUtil;
 import appeng.util.Platform;
 
 /**
@@ -115,6 +118,13 @@ public class AppEngClient extends AppEngBase {
      * changed.
      */
     private CableRenderMode prevCableRenderMode = CableRenderMode.STANDARD;
+
+    /**
+     * This modifier key has to be held to activate mouse wheel items.
+     */
+    private static final KeyMapping MOUSE_WHEEL_ITEM_MODIFIER = new KeyMapping(
+            "key.ae2.mouse_wheel_item_modifier", KeyConflictContext.IN_GAME, InputConstants.Type.KEYSYM,
+            InputConstants.KEY_LSHIFT, "key.ae2.category");
 
     private final Guide guide;
 
@@ -217,6 +227,7 @@ public class AppEngClient extends AppEngBase {
         if (AEConfig.instance().isGuideHotkeyEnabled()) {
             e.register(OpenGuideHotkey.getHotkey());
         }
+        e.register(MOUSE_WHEEL_ITEM_MODIFIER);
         Hotkeys.finalizeRegistration(e::register);
     }
 
@@ -299,10 +310,10 @@ public class AppEngClient extends AppEngBase {
 
         final Minecraft mc = Minecraft.getInstance();
         final Player player = mc.player;
-        if (InteractionUtil.isInAlternateUseMode(player)) {
-            final boolean mainHand = player.getItemInHand(InteractionHand.MAIN_HAND)
+        if (MOUSE_WHEEL_ITEM_MODIFIER.isDown()) {
+            var mainHand = player.getItemInHand(InteractionHand.MAIN_HAND)
                     .getItem() instanceof IMouseWheelItem;
-            final boolean offHand = player.getItemInHand(InteractionHand.OFF_HAND).getItem() instanceof IMouseWheelItem;
+            var offHand = player.getItemInHand(InteractionHand.OFF_HAND).getItem() instanceof IMouseWheelItem;
 
             if (mainHand || offHand) {
                 NetworkHandler.instance().sendToServer(new MouseWheelPacket(me.getScrollDeltaY() > 0));
@@ -375,7 +386,7 @@ public class AppEngClient extends AppEngBase {
     }
 
     private void updateCableRenderMode() {
-        var currentMode = PartHelper.getCableRenderMode();
+        var currentMode = getCableRenderMode();
 
         // Handle changes to the cable-rendering mode
         if (currentMode == this.prevCableRenderMode) {
@@ -384,21 +395,25 @@ public class AppEngClient extends AppEngBase {
 
         this.prevCableRenderMode = currentMode;
 
-        final Minecraft mc = Minecraft.getInstance();
+        var mc = Minecraft.getInstance();
         if (mc.player == null || mc.level == null) {
             return;
         }
 
-        final Player player = mc.player;
-
-        final int x = (int) player.getX();
-        final int y = (int) player.getY();
-        final int z = (int) player.getZ();
-
-        final int range = 16 * 16;
-
-        mc.levelRenderer.setBlocksDirty(x - range, y - range, z - range, x + range, y + range,
-                z + range);
+        // Invalidate all sections that contain a cable bus within view distance
+        // This should asynchronously update the chunk meshes and as part of that use the new facade render mode
+        var viewDistance = (int) Math.ceil(mc.levelRenderer.getLastViewDistance());
+        ChunkPos.rangeClosed(mc.player.chunkPosition(), viewDistance).forEach(chunkPos -> {
+            var chunk = mc.level.getChunkSource().getChunkNow(chunkPos.x, chunkPos.z);
+            if (chunk != null) {
+                for (var i = 0; i < chunk.getSectionsCount(); i++) {
+                    var section = chunk.getSection(i);
+                    if (section.maybeHas(state -> state.is(AEBlocks.CABLE_BUS.block()))) {
+                        mc.levelRenderer.setSectionDirty(chunkPos.x, chunk.getSectionYFromSectionIndex(i), chunkPos.z);
+                    }
+                }
+            }
+        });
     }
 
     @Override
@@ -407,10 +422,12 @@ public class AppEngClient extends AppEngBase {
             return super.getCableRenderMode();
         }
 
-        final Minecraft mc = Minecraft.getInstance();
-        final Player player = mc.player;
+        var mc = Minecraft.getInstance();
+        if (mc.player == null) {
+            return CableRenderMode.STANDARD;
+        }
 
-        return this.getCableRenderModeForPlayer(player);
+        return this.getCableRenderModeForPlayer(mc.player);
     }
 
     @Override

@@ -54,7 +54,7 @@ navigation:
 不过，它们无法制作或用镐采集，即使使用精准采集。(不过它们*可以*用 [空间存储](ae2-mechanics/spatial-io.md) 移动)
 
 就赛特斯石英芽本身而言，其生长速度非常缓慢。
-幸运的是，当 <ItemLink id="growth_accelerator" /> 放在石英母岩旁边时，会大大加快这一过程。你应该首先建造几个这样的装置。
+幸运的是，当 <ItemLink id="growth_accelerator" /> 放在石英母岩旁边时，会大大加快这一过程。当务之急是建造几个这样的装置。
 
 <GameScene zoom="4" background="transparent">
 <ImportStructure src="assets/assemblies/budding_certus_2.snbt" />
@@ -134,7 +134,7 @@ The <ItemLink id="chest" /> 的功能非常有限，只能在特定情况下使�
     （4k 和 1k 混合 [分区](items-blocks-machines/cell_workbench.md) 会更有效，但这是一个复杂的问题，我们现在就不讨论了）
 ---
 1.  放置驱动器。
-2.  能源接收器（以及其他几种 AE2 [设备](ae2-mechanics/devices.md)）有两种模式，方块和平面。它们可以在合成槽中进行转换。如果你的能源接收器是方块，就把它放在驱动器旁边。如果是平面，则在驱动器上放置一根电缆，然后将接受器放在电缆上。
+2.  能源接收器（以及其他几种 AE2 [设备](ae2-mechanics/devices.md)）有两种变体，方块和面板。它们可以在合成栏中进行转换。如果你的能源接收器是方块，就把它放在驱动器旁边。如果是面板，则在驱动器上放置一根电缆，然后将接受器放在电缆上。
 3.  用电缆/管道/导管将能量从你最喜欢的能量发生器输入能源接收器。
 4.  将线缆放在驱动器顶部（或与视线水平的位置），然后将终端或合成终端放在上面。
 5.  将存储元件放入驱动器。
