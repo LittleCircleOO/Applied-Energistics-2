@@ -44,6 +44,7 @@ item_ids:
 满足所有规则并接上电力后，控制器会发光并循环变色。
 
 可以右键控制器以获得与<ItemLink id="network_tool" />相同的界面。
-## 合成 
+
+## 配方
 
 <RecipeFor id="controller" />
