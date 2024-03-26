@@ -142,7 +142,7 @@ item_ids:
 ## 包层线缆  
 
 <GameScene zoom="6" background="transparent"> 
-  <ImportStructure src="../assets/assemblies/fluix_covered_cable.snbt" />
+  <ImportStructure src="../assets/assemblies/fluix_covered_cable.snbt" /> 
   <IsometricCamera yaw="195" pitch="30" />
 </GameScene>
 
