@@ -19,7 +19,7 @@ item_ids:
 
 同一个 [ME 网络](../ae2-mechanics/me-network-connections.md) 中不能有多个控制器。  
 
-控制器的每个面提供 32 个[通道](../ae2-mechanics/channels.md)。  
+控制器的每个面提供 32 个 [频道](../ae2-mechanics/channels.md)。  
 
 控制器需要每个控制器方块 6 AE/t 的能量供应才能正常工作。每个控制器方块能够存储 8000 AE，因此更大的网络可能需要额外的能量存储。
 详细信息请参阅[能量](../ae2-mechanics/energy.md)。  
