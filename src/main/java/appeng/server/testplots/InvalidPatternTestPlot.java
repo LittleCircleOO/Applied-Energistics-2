@@ -8,6 +8,7 @@ import appeng.blockentity.storage.SkyChestBlockEntity;
 import appeng.core.definitions.AEBlocks;
 import appeng.server.testworld.PlotBuilder;
 
+@TestPlotClass
 public class InvalidPatternTestPlot {
 
     /**
@@ -31,21 +32,6 @@ public class InvalidPatternTestPlot {
             helper.check(details == null, "pattern should fail decoding");
             helper.succeed();
         });
-    }
-
-    @TestPlot("pattern_ingredients_changed")
-    public static void patternIngredientsChanged(PlotBuilder builder) {
-
-    }
-
-    @TestPlot("pattern_invalid_input_id")
-    public static void patternInvalidInputId(PlotBuilder builder) {
-
-    }
-
-    @TestPlot("pattern_invalid_output_id")
-    public static void patternInvalidOutputId(PlotBuilder builder) {
-
     }
 
 }
