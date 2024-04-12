@@ -1,20 +1,17 @@
 ---
 navigation:
   parent: ae2-mechanics/ae2-mechanics-index.md
-  title: Channels
+  title: 频道
   icon: controller
 ---
 
-# Channels
+# 频道
 
-Applied Energistics 2's [ME Networks](me-network-connections.md) require
-Channels to support [devices](../ae2-mechanics/devices.md) which use networked storage, or other network
-services. Think of channels like USB cables to all your devices. A computer only has so many USB ports and can only support
-so many devices connected to it. Most machines, full-block devices, and standard cables can only pass through
-up to 8 channels. You can think of full-block devices and standard cables as a bundle of 8 "channel wires". However, [dense cables](../items-blocks-machines/cables.md#dense-cable) can support up
-to 32 channels. The only other devices capable of transmitting 32 are <ItemLink id="me_p2p_tunnel" />
-and the [Quantum Network Bridge](../items-blocks-machines/quantum_bridge.md). Each time a device uses up a channel, imagine pulling off a usb "wire" from
-the bundle, which obviously means that "wire" isn't available further down the line.
+应用能源 2 (AE2) 的 [ME 网络](me-network-connections.md) 需要频道来支持使用网络存储或其他网络服务的 [设备](../ae2-mechanics/devices.md) 。
+把频道想象成连接所有设备的 USB 线缆。一台电脑只有那么多 USB 端口，也只能支持那么多连接到电脑上的设备。
+大多数机器、完整方块设备和标准线缆最多只能通过 8 个频道。你可以把完整方块设备和标准线缆看作一捆 8 根 "频道线"。
+然而，[致密线缆](../items-blocks-machines/cables.md#dense-cable) 最多可支持 32 个频道。其他能够传输 32 个频道的设备只有 <ItemLink id="me_p2p_tunnel" /> 和 [量子网桥](../items-blocks-machines/quantum_bridge.md)。
+每当一个设备占用一个频道时，想象一下从线束中抽出一条 USB "线"，这显然意味着该 "线" 无法被其他设备使用。
 
 <GameScene zoom="7" interactive={true}>
   <ImportStructure src="../assets/assemblies/channel_demonstration_1.snbt" />
@@ -49,7 +46,7 @@ the bundle, which obviously means that "wire" isn't available further down the l
   <LineAnnotation color="#33ff33" from="1.5 .1 .3" to="1.5 .4 .3" alwaysOnTop={true}/>
 
   <LineAnnotation color="#ff3333" from="3.5 .5 .5" to="5.5 .5 .5" alwaysOnTop={true}>
-  All 8 channels in the cable have been used, so the Drive does not get one.  
+  线缆中的所有 8 个频道都已使用，因此驱动器没有频道。
   </LineAnnotation>
 
   <LineAnnotation color="#993333" from="1 .5 .5" to="1.25 .5 .5" alwaysOnTop={true}/>
@@ -65,7 +62,7 @@ the bundle, which obviously means that "wire" isn't available further down the l
   <IsometricCamera yaw="15" pitch="30" />
 </GameScene>
 
-An easy way to see how channels are being used and routed through your network is to use [smart cables](../items-blocks-machines/cables.md), which will display on them the paths and usage of channels.
+使用 [智能线缆](../items-blocks-machines/cables.md) 是查看网络中频道使用和路由情况的简便方法，它会显示频道的路径和使用情况。
 
 Channels will consume 1⁄128 ae/t per node they transverse, this means that by
 adding a <ItemLink id="controller" /> for a
