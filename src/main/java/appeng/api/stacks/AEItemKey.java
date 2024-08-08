@@ -8,6 +8,8 @@ import java.util.Objects;
 import java.util.WeakHashMap;
 
 import org.jetbrains.annotations.Nullable;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -19,15 +21,17 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.common.capabilities.CapabilityProvider;
 
 import appeng.api.storage.AEKeyFilter;
 import appeng.core.AELog;
-import appeng.util.Platform;
 
 public final class AEItemKey extends AEKey {
+    private static final Logger LOG = LoggerFactory.getLogger(AEItemKey.class);
+
     private static final MethodHandle SERIALIZE_CAPS_HANDLE;
     static {
         try {
@@ -55,6 +59,17 @@ public final class AEItemKey extends AEKey {
     private final InternedTag internedCaps;
     private final int hashCode;
     private final int cachedDamage;
+    /**
+     * A lazily initialized itemstack used for display and ingredient testing purposes. This should never be modified
+     * and will always have amount 1.
+     */
+    @Nullable
+    private ItemStack readOnlyStack;
+
+    /**
+     * Max stack size cache, or {@code -1} if not initialized.
+     */
+    private int maxStackSize = -1;
 
     private AEItemKey(Item item, InternedTag internedTag, InternedTag internedCaps) {
         this.item = item;
@@ -73,7 +88,10 @@ public final class AEItemKey extends AEKey {
         if (stack.isEmpty()) {
             return null;
         }
-        return of(stack.getItem(), stack.getTag(), serializeStackCaps(stack));
+        var ret = of(stack.getItem(), stack.getTag(), serializeStackCaps(stack));
+        // Cache max stack size since we already have an ItemStack.
+        ret.maxStackSize = stack.getMaxStackSize();
+        return ret;
     }
 
     public static boolean matches(AEKey what, ItemStack itemStack) {
@@ -129,6 +147,27 @@ public final class AEItemKey extends AEKey {
         // TODO: remove or optimize cap check if it becomes too slow >:-(
         return !stack.isEmpty() && stack.is(item) && Objects.equals(stack.getTag(), internedTag.tag)
                 && Objects.equals(serializeStackCaps(stack), internedCaps.tag);
+    }
+
+    public boolean matches(Ingredient ingredient) {
+        return ingredient.test(getReadOnlyStack());
+    }
+
+    /**
+     * @return The ItemStack represented by this key. <strong>NEVER MUTATE THIS</strong>
+     */
+    public ItemStack getReadOnlyStack() {
+        if (readOnlyStack == null) {
+            readOnlyStack = new ItemStack(item, 1, internedCaps.tag);
+            readOnlyStack.setTag(internedTag.tag);
+        } else {
+            if (readOnlyStack.isEmpty()) {
+                LOG.error("Something destroyed the read-only itemstack of {}", this);
+                readOnlyStack = null;
+                return getReadOnlyStack();
+            }
+        }
+        return readOnlyStack;
     }
 
     public ItemStack toStack() {
@@ -196,7 +235,7 @@ public final class AEItemKey extends AEKey {
      */
     @Override
     public int getFuzzySearchMaxValue() {
-        return item.getMaxDamage();
+        return getReadOnlyStack().getMaxDamage();
     }
 
     @Override
@@ -234,7 +273,7 @@ public final class AEItemKey extends AEKey {
                 break;
             }
 
-            var taken = Math.min(amount, item.getMaxStackSize());
+            var taken = Math.min(amount, getMaxStackSize());
             amount -= taken;
             drops.add(toStack((int) taken));
         }
@@ -242,7 +281,7 @@ public final class AEItemKey extends AEKey {
 
     @Override
     protected Component computeDisplayName() {
-        return Platform.getItemDisplayName(item, internedTag.tag);
+        return getReadOnlyStack().getHoverName();
     }
 
     @SuppressWarnings("unchecked")
@@ -257,6 +296,16 @@ public final class AEItemKey extends AEKey {
      */
     public boolean isDamaged() {
         return cachedDamage > 0;
+    }
+
+    public int getMaxStackSize() {
+        int ret = maxStackSize;
+
+        if (ret == -1) {
+            maxStackSize = ret = getReadOnlyStack().getMaxStackSize();
+        }
+
+        return ret;
     }
 
     @Override

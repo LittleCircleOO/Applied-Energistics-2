@@ -250,7 +250,6 @@ allprojects {
 
 ///////////////////
 // Version Number
-version = version_major + "." + version_minor + "." + version_patch
 
 ext.pr = System.getenv('PR_NUMBER') ?: ""
 if (ext.pr) {
@@ -300,6 +299,7 @@ def commonRunProperties = {
     property 'forge.logging.console.level', 'debug'
     property 'fml.earlyprogresswindow', 'false'
     property 'appeng.tests', 'true'
+    property 'appeng.version', project.version
     jvmArgs "--add-opens", "java.base/sun.security.util=ALL-UNNAMED"
     jvmArgs "--add-opens", "java.base/java.util.jar=ALL-UNNAMED"
     // See https://github.com/Vazkii/Patchouli#mixin-troubleshooting
@@ -370,6 +370,7 @@ mixin {
 //////////////
 // Artifacts
 processResources {
+    inputs.property("version", version)
     exclude '.cache'
 
     filesMatching("META-INF/mods.toml") {
@@ -476,13 +477,6 @@ publishing {
             artifactId = project.archivesBaseName
             version = project.version
 
-            // ForgeGradle will generate wild dependency definitions, see https://github.com/MinecraftForge/ForgeGradle/issues/584
-            // Since we don't actually depend on anything, just remove the entire node.
-            pom.withXml {
-                asNode().remove(asNode().dependencies)
-            }
-
-            from components.java
             artifact shadowJar
             artifact sourcesJar
             artifact javadocJar
@@ -491,20 +485,8 @@ publishing {
     }
     repositories {
         maven {
-            credentials {
-                username System.getenv("GITHUB_ACTOR")
-                password System.getenv("GITHUB_TOKEN")
-            }
-            name = "GitHubPackages"
-            url = "https://maven.pkg.github.com/AppliedEnergistics/Applied-Energistics-2"
-        }
-        maven {
-            credentials {
-                username System.getenv("MODMAVEN_USER")
-                password System.getenv("MODMAVEN_PASSWORD")
-            }
-            name = "modmaven"
-            url = "https://modmaven.dev/artifactory/local-releases/"
+            name = "Local"
+            url = file("build/repo").toURI()
         }
     }
 }

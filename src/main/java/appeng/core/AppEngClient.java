@@ -32,6 +32,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.HitResult;
 import net.minecraftforge.api.distmarker.Dist;
@@ -57,7 +58,6 @@ import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.fml.loading.FMLLoader;
 
 import appeng.api.parts.CableRenderMode;
-import appeng.api.parts.PartHelper;
 import appeng.client.EffectType;
 import appeng.client.Hotkeys;
 import appeng.client.commands.ClientCommands;
@@ -76,6 +76,7 @@ import appeng.client.render.StorageCellClientTooltipComponent;
 import appeng.client.render.effects.EnergyParticleData;
 import appeng.client.render.effects.ParticleTypes;
 import appeng.client.render.overlay.OverlayManager;
+import appeng.core.definitions.AEBlocks;
 import appeng.core.sync.network.NetworkHandler;
 import appeng.core.sync.packets.MouseWheelPacket;
 import appeng.helpers.IMouseWheelItem;
@@ -344,10 +345,10 @@ public class AppEngClient extends AppEngBase {
     }
 
     private void spawnVibrant(Level level, double x, double y, double z) {
-        if (AppEngClient.instance().shouldAddParticles(Platform.getRandom())) {
-            final double d0 = (Platform.getRandomFloat() - 0.5F) * 0.26D;
-            final double d1 = (Platform.getRandomFloat() - 0.5F) * 0.26D;
-            final double d2 = (Platform.getRandomFloat() - 0.5F) * 0.26D;
+        if (AppEngClient.instance().shouldAddParticles(level.getRandom())) {
+            final double d0 = (level.getRandom().nextFloat() - 0.5F) * 0.26D;
+            final double d1 = (level.getRandom().nextFloat() - 0.5F) * 0.26D;
+            final double d2 = (level.getRandom().nextFloat() - 0.5F) * 0.26D;
 
             Minecraft.getInstance().particleEngine.createParticle(ParticleTypes.VIBRANT, x + d0, y + d1, z + d2, 0.0D,
                     0.0D,
@@ -356,9 +357,10 @@ public class AppEngClient extends AppEngBase {
     }
 
     private void spawnEnergy(Level level, double posX, double posY, double posZ) {
-        final float x = (float) (Platform.getRandomInt() % 100 * 0.01 - 0.5) * 0.7f;
-        final float y = (float) (Platform.getRandomInt() % 100 * 0.01 - 0.5) * 0.7f;
-        final float z = (float) (Platform.getRandomInt() % 100 * 0.01 - 0.5) * 0.7f;
+        var random = level.getRandom();
+        final float x = (float) (Math.abs(random.nextInt()) % 100 * 0.01 - 0.5) * 0.7f;
+        final float y = (float) (Math.abs(random.nextInt()) % 100 * 0.01 - 0.5) * 0.7f;
+        final float z = (float) (Math.abs(random.nextInt()) % 100 * 0.01 - 0.5) * 0.7f;
 
         Minecraft.getInstance().particleEngine.createParticle(EnergyParticleData.FOR_BLOCK, posX + x, posY + y,
                 posZ + z,
@@ -372,7 +374,7 @@ public class AppEngClient extends AppEngBase {
     }
 
     private void updateCableRenderMode() {
-        var currentMode = PartHelper.getCableRenderMode();
+        var currentMode = getCableRenderMode();
 
         // Handle changes to the cable-rendering mode
         if (currentMode == this.prevCableRenderMode) {
@@ -381,21 +383,25 @@ public class AppEngClient extends AppEngBase {
 
         this.prevCableRenderMode = currentMode;
 
-        final Minecraft mc = Minecraft.getInstance();
+        var mc = Minecraft.getInstance();
         if (mc.player == null || mc.level == null) {
             return;
         }
 
-        final Player player = mc.player;
-
-        final int x = (int) player.getX();
-        final int y = (int) player.getY();
-        final int z = (int) player.getZ();
-
-        final int range = 16 * 16;
-
-        mc.levelRenderer.setBlocksDirty(x - range, y - range, z - range, x + range, y + range,
-                z + range);
+        // Invalidate all sections that contain a cable bus within view distance
+        // This should asynchronously update the chunk meshes and as part of that use the new facade render mode
+        var viewDistance = (int) Math.ceil(mc.levelRenderer.getLastViewDistance());
+        ChunkPos.rangeClosed(mc.player.chunkPosition(), viewDistance).forEach(chunkPos -> {
+            var chunk = mc.level.getChunkSource().getChunkNow(chunkPos.x, chunkPos.z);
+            if (chunk != null) {
+                for (var i = 0; i < chunk.getSectionsCount(); i++) {
+                    var section = chunk.getSection(i);
+                    if (section.maybeHas(state -> state.is(AEBlocks.CABLE_BUS.block()))) {
+                        mc.levelRenderer.setSectionDirty(chunkPos.x, chunk.getSectionYFromSectionIndex(i), chunkPos.z);
+                    }
+                }
+            }
+        });
     }
 
     @Override
@@ -404,10 +410,12 @@ public class AppEngClient extends AppEngBase {
             return super.getCableRenderMode();
         }
 
-        final Minecraft mc = Minecraft.getInstance();
-        final Player player = mc.player;
+        var mc = Minecraft.getInstance();
+        if (mc.player == null) {
+            return CableRenderMode.STANDARD;
+        }
 
-        return this.getCableRenderModeForPlayer(player);
+        return this.getCableRenderModeForPlayer(mc.player);
     }
 
     @Override

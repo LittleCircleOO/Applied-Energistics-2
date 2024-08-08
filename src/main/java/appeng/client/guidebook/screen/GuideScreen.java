@@ -22,12 +22,16 @@ import net.minecraft.client.gui.screens.inventory.tooltip.TooltipRenderUtil;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraftforge.fml.ModContainer;
+import net.minecraftforge.fml.ModList;
+import net.minecraftforge.forgespi.language.IModInfo;
 
 import appeng.client.Point;
 import appeng.client.gui.DashPattern;
 import appeng.client.gui.DashedRectangle;
 import appeng.client.guidebook.Guide;
 import appeng.client.guidebook.GuidePage;
+import appeng.client.guidebook.GuidebookText;
 import appeng.client.guidebook.PageAnchor;
 import appeng.client.guidebook.PageCollection;
 import appeng.client.guidebook.color.ColorValue;
@@ -47,12 +51,15 @@ import appeng.client.guidebook.document.block.LytParagraph;
 import appeng.client.guidebook.document.flow.LytFlowAnchor;
 import appeng.client.guidebook.document.flow.LytFlowContainer;
 import appeng.client.guidebook.document.flow.LytFlowContent;
+import appeng.client.guidebook.document.flow.LytFlowSpan;
 import appeng.client.guidebook.document.interaction.GuideTooltip;
 import appeng.client.guidebook.document.interaction.InteractiveElement;
 import appeng.client.guidebook.layout.LayoutContext;
 import appeng.client.guidebook.layout.MinecraftFontMetrics;
 import appeng.client.guidebook.render.GuidePageTexture;
 import appeng.client.guidebook.render.SimpleRenderContext;
+import appeng.client.guidebook.style.TextAlignment;
+import appeng.client.guidebook.style.TextStyle;
 import appeng.core.AEConfig;
 import appeng.core.AppEng;
 
@@ -246,6 +253,8 @@ public class GuideScreen extends Screen {
 
         renderTitle(documentRect, context);
 
+        renderExternalpageSource(documentRect, context);
+
         super.render(guiGraphics, mouseX, mouseY, partialTick);
 
         poseStack.popPose();
@@ -255,6 +264,54 @@ public class GuideScreen extends Screen {
             renderTooltip(guiGraphics, mouseX, mouseY);
         }
 
+    }
+
+    private void renderExternalpageSource(LytRect documentRect, SimpleRenderContext context) {
+        // Render the source of the content
+        var externalSource = getExternalSourceName();
+        if (externalSource != null) {
+            var paragraph = new LytParagraph();
+            paragraph.appendText(GuidebookText.ContentFrom.text().getString() + " ");
+            var sourceSpan = new LytFlowSpan();
+
+            sourceSpan.appendText(externalSource);
+            sourceSpan.setStyle(TextStyle.builder().italic(true).build());
+            paragraph.append(sourceSpan);
+            paragraph.setStyle(TextStyle.builder().alignment(TextAlignment.RIGHT).build());
+            var layoutContext = new LayoutContext(new MinecraftFontMetrics());
+            paragraph.layout(layoutContext, documentRect.x(), documentRect.bottom(), documentRect.width());
+            var buffers = context.beginBatch();
+            paragraph.renderBatch(context, buffers);
+            context.endBatch(buffers);
+        }
+    }
+
+    /**
+     * Gets a readable name for the source of the page (i.e. resource pack name, mod name) if the page has been
+     * contributed externally.
+     */
+    @Nullable
+    private String getExternalSourceName() {
+        var pack = Minecraft.getInstance().getResourcePackRepository().getPack(currentPage.sourcePack());
+        if (pack != null && !pack.getId().equals("mod_resources")) {
+            return pack.getDescription().getString();
+        }
+
+        var pageNamespace = currentPage.id().getNamespace();
+        // If the page had an ID under another mod's namespace, we have to use the mod-list to resolve its name
+        if (!guide.getDefaultNamespace().equals(pageNamespace)) {
+            return ModList.get().getModContainerById(pageNamespace)
+                    .map(ModContainer::getModInfo)
+                    .map(IModInfo::getDisplayName)
+                    .orElse(null);
+        }
+
+        return null;
+    }
+
+    @Override
+    public void renderBackground(GuiGraphics graphics) {
+        // Stub this out otherwise vanilla renders a background on top of our content
     }
 
     private void renderTitle(LytRect documentRect, SimpleRenderContext context) {

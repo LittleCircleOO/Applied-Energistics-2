@@ -210,6 +210,16 @@ public class CraftingRecipes extends AE2RecipeProvider {
         // recipes/network
         // ====================================================
 
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, AEBlocks.CRYSTAL_RESONANCE_GENERATOR)
+                .pattern("cfc")
+                .pattern("cqc")
+                .pattern("iii")
+                .define('i', ConventionTags.IRON_INGOT)
+                .define('f', AEBlocks.FLUIX_BLOCK)
+                .define('c', ConventionTags.COPPER_INGOT)
+                .define('q', AEItems.CERTUS_QUARTZ_CRYSTAL_CHARGED)
+                .unlockedBy(getHasName(AEBlocks.FLUIX_BLOCK), has(AEBlocks.FLUIX_BLOCK))
+                .save(consumer, AppEng.makeId("network/crystal_resonance_generator"));
         ShapedRecipeBuilder.shaped(RecipeCategory.MISC, AEBlocks.WIRELESS_ACCESS_POINT)
                 .pattern("a")
                 .pattern("b")
@@ -576,13 +586,13 @@ public class CraftingRecipes extends AE2RecipeProvider {
                 .unlockedBy("has_crafting_unit", has(AEBlocks.CRAFTING_UNIT))
                 .save(consumer, AppEng.makeId("network/crafting/1k_cpu_crafting_storage"));
         ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, AEBlocks.CRAFTING_STORAGE_4K)
-                .requires(AEItems.CELL_COMPONENT_4K)
                 .requires(AEBlocks.CRAFTING_UNIT)
+                .requires(AEItems.CELL_COMPONENT_4K)
                 .unlockedBy("has_crafting_unit", has(AEBlocks.CRAFTING_UNIT))
                 .save(consumer, AppEng.makeId("network/crafting/4k_cpu_crafting_storage"));
         ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, AEBlocks.CRAFTING_STORAGE_16K)
-                .requires(AEItems.CELL_COMPONENT_16K)
                 .requires(AEBlocks.CRAFTING_UNIT)
+                .requires(AEItems.CELL_COMPONENT_16K)
                 .unlockedBy("has_crafting_unit", has(AEBlocks.CRAFTING_UNIT))
                 .save(consumer, AppEng.makeId("network/crafting/16k_cpu_crafting_storage"));
         ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, AEBlocks.CRAFTING_STORAGE_64K)
@@ -591,18 +601,18 @@ public class CraftingRecipes extends AE2RecipeProvider {
                 .unlockedBy("has_crafting_unit", has(AEBlocks.CRAFTING_UNIT))
                 .save(consumer, AppEng.makeId("network/crafting/64k_cpu_crafting_storage"));
         ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, AEBlocks.CRAFTING_STORAGE_256K)
-                .requires(AEItems.CELL_COMPONENT_256K)
                 .requires(AEBlocks.CRAFTING_UNIT)
+                .requires(AEItems.CELL_COMPONENT_256K)
                 .unlockedBy("has_crafting_unit", has(AEBlocks.CRAFTING_UNIT))
                 .save(consumer, AppEng.makeId("network/crafting/256k_cpu_crafting_storage"));
         ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, AEBlocks.CRAFTING_ACCELERATOR)
-                .requires(AEItems.ENGINEERING_PROCESSOR)
                 .requires(AEBlocks.CRAFTING_UNIT)
+                .requires(AEItems.ENGINEERING_PROCESSOR)
                 .unlockedBy("has_crafting_unit", has(AEBlocks.CRAFTING_UNIT))
                 .save(consumer, AppEng.makeId("network/crafting/cpu_crafting_accelerator"));
         ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, AEBlocks.CRAFTING_MONITOR)
-                .requires(AEParts.STORAGE_MONITOR)
                 .requires(AEBlocks.CRAFTING_UNIT)
+                .requires(AEParts.STORAGE_MONITOR)
                 .unlockedBy("has_crafting_unit", has(AEBlocks.CRAFTING_UNIT))
                 .save(consumer, AppEng.makeId("network/crafting/cpu_crafting_monitor"));
 

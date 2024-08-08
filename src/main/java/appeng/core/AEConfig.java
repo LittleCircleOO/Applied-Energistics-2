@@ -170,6 +170,7 @@ public final class AEConfig {
     }
 
     private void syncCommonConfig() {
+        PowerUnits.FE.conversionRatio = COMMON.powerRatioForgeEnergy.get();
         PowerUnits.RF.conversionRatio = COMMON.powerRatioForgeEnergy.get();
         PowerMultiplier.CONFIG.multiplier = COMMON.powerUsageMultiplier.get();
 
@@ -226,14 +227,6 @@ public final class AEConfig {
     public double wireless_getPowerDrain(int boosters) {
         return this.wirelessBaseCost
                 + this.wirelessCostMultiplier * Math.pow(boosters, 1 + boosters / this.wirelessHighWirelessCount);
-    }
-
-    public boolean isSearchTooltips() {
-        return CLIENT.searchTooltips.get();
-    }
-
-    public void setSearchTooltips(boolean enable) {
-        CLIENT.searchTooltips.set(enable);
     }
 
     public boolean isSearchModNameInTooltips() {
@@ -298,6 +291,10 @@ public final class AEConfig {
 
     public double getGridEnergyStoragePerNode() {
         return COMMON.gridEnergyStoragePerNode.get();
+    }
+
+    public double getCrystalResonanceGeneratorRate() {
+        return COMMON.crystalResonanceGeneratorRate.get();
     }
 
     public void save() {
@@ -416,6 +413,10 @@ public final class AEConfig {
 
     public boolean isSpawnPressesInMeteoritesEnabled() {
         return COMMON.spawnPressesInMeteorites.get();
+    }
+
+    public boolean isSpawnFlawlessOnlyEnabled() {
+        return COMMON.spawnFlawlessOnly.get();
     }
 
     public boolean isMatterCanonBlockDamageEnabled() {
@@ -555,7 +556,6 @@ public final class AEConfig {
         public final IntegerOption terminalMargin;
 
         // Search Settings
-        public final BooleanOption searchTooltips;
         public final BooleanOption searchModNameInTooltips;
         public final BooleanOption useExternalSearch;
         public final BooleanOption clearExternalSearchOnOpen;
@@ -597,8 +597,6 @@ public final class AEConfig {
 
             // Search Settings
             var search = root.subsection("search");
-            this.searchTooltips = search.addBoolean("searchTooltips", true,
-                    "Should tooltips be searched. Performance impact");
             this.searchModNameInTooltips = search.addBoolean("searchModNameInTooltips", false,
                     "Should the mod name be included when searching in tooltips.");
             this.useExternalSearch = search.addBoolean("useExternalSearch", false,
@@ -665,6 +663,7 @@ public final class AEConfig {
 
         // Meteors
         public final BooleanOption spawnPressesInMeteorites;
+        public final BooleanOption spawnFlawlessOnly;
 
         // Wireless
         public final DoubleOption wirelessBaseCost;
@@ -682,6 +681,7 @@ public final class AEConfig {
         public final DoubleOption powerRatioForgeEnergy;
         public final DoubleOption powerUsageMultiplier;
         public final DoubleOption gridEnergyStoragePerNode;
+        public final DoubleOption crystalResonanceGeneratorRate;
 
         // Vibration Chamber
         public final DoubleOption vibrationChamberBaseEnergyPerFuelTick;
@@ -756,6 +756,7 @@ public final class AEConfig {
             ConfigSection worldGen = root.subsection("worldGen");
 
             this.spawnPressesInMeteorites = worldGen.addBoolean("spawnPressesInMeteorites", true);
+            this.spawnFlawlessOnly = worldGen.addBoolean("spawnFlawlessOnly", false);
 
             ConfigSection wireless = root.subsection("wireless");
             this.wirelessBaseCost = wireless.addDouble("wirelessBaseCost", 8.0);
@@ -775,6 +776,8 @@ public final class AEConfig {
             powerUsageMultiplier = PowerRatios.addDouble("UsageMultiplier", 1.0, 0.01, Double.MAX_VALUE);
             gridEnergyStoragePerNode = PowerRatios.addDouble("GridEnergyStoragePerNode", 25, 1, 1000000,
                     "How much energy can the internal grid buffer storage per node attached to the grid.");
+            crystalResonanceGeneratorRate = PowerRatios.addDouble("CrystalResonanceGeneratorRate", 20, 0, 1000000,
+                    "How much energy a crystal resonance generator generates per tick.");
 
             ConfigSection Condenser = root.subsection("Condenser");
             condenserMatterBallsPower = Condenser.addInt("MatterBalls", 256);
