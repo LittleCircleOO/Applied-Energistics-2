@@ -37,6 +37,7 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 
 import appeng.api.config.Actionable;
+import appeng.api.config.InscriberInputCapacity;
 import appeng.api.config.PowerMultiplier;
 import appeng.api.config.PowerUnits;
 import appeng.api.config.Setting;
@@ -129,7 +130,7 @@ public class InscriberBlockEntity extends AENetworkPowerBlockEntity
         this.configManager = new ConfigManager(this::onConfigChanged);
         this.configManager.registerSetting(Settings.INSCRIBER_SEPARATE_SIDES, YesNo.NO);
         this.configManager.registerSetting(Settings.AUTO_EXPORT, YesNo.NO);
-        this.configManager.registerSetting(Settings.INSCRIBER_BUFFER_SIZE, YesNo.YES);
+        this.configManager.registerSetting(Settings.INSCRIBER_INPUT_CAPACITY, InscriberInputCapacity.SIXTY_FOUR);
 
         var automationFilter = new AutomationFilter();
         this.topItemHandlerExtern = new FilteredInternalInventory(this.topItemHandler, automationFilter);
@@ -459,16 +460,11 @@ public class InscriberBlockEntity extends AENetworkPowerBlockEntity
             markForUpdate();
         }
 
-        if (setting == Settings.INSCRIBER_BUFFER_SIZE) {
-            if (configManager.getSetting(Settings.INSCRIBER_BUFFER_SIZE) == YesNo.YES) {
-                topItemHandler.setMaxStackSize(0, 64);
-                sideItemHandler.setMaxStackSize(0, 64);
-                bottomItemHandler.setMaxStackSize(0, 64);
-            } else {
-                topItemHandler.setMaxStackSize(0, 4);
-                sideItemHandler.setMaxStackSize(0, 4);
-                bottomItemHandler.setMaxStackSize(0, 4);
-            }
+        if (setting == Settings.INSCRIBER_INPUT_CAPACITY) {
+            var capacity = configManager.getSetting(Settings.INSCRIBER_INPUT_CAPACITY).capacity;
+            topItemHandler.setMaxStackSize(0, capacity);
+            sideItemHandler.setMaxStackSize(0, capacity);
+            bottomItemHandler.setMaxStackSize(0, capacity);
         }
 
         saveChanges();
