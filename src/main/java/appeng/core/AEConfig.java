@@ -26,6 +26,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.function.DoubleSupplier;
 
+import net.fabricmc.loader.api.FabricLoader;
+
 import appeng.api.config.CondenserOutput;
 import appeng.api.config.PowerMultiplier;
 import appeng.api.config.PowerUnits;
@@ -256,6 +258,14 @@ public final class AEConfig {
 
     public void setAutoFocusSearch(boolean enable) {
         CLIENT.autoFocusSearch.set(enable);
+    }
+
+    public boolean isReverseFilterFunction() {
+        return CLIENT.reverseFilterFunction.get();
+    }
+
+    public void setReverseFilterFunction(boolean enable) {
+        CLIENT.reverseFilterFunction.set(enable);
     }
 
     public boolean isSyncWithExternalSearch() {
@@ -547,6 +557,7 @@ public final class AEConfig {
         public final BooleanOption syncWithExternalSearch;
         public final BooleanOption rememberLastSearch;
         public final BooleanOption autoFocusSearch;
+        public final BooleanOption reverseFilterFunction;
 
         // Tooltip settings
         public final BooleanOption tooltipShowCellUpgrades;
@@ -594,6 +605,13 @@ public final class AEConfig {
                     "Remembers the last search term and restores it when the terminal opens");
             this.autoFocusSearch = search.addBoolean("autoFocusSearch", false,
                     "Automatically focuses the search field when the terminal opens");
+            if (isModLoaded("emi") || isModLoaded("jei")) {
+                this.reverseFilterFunction = search.addBoolean("reverseFilterFunction", true,
+                        "Reverse the function of # and $ in search filter");
+            } else {
+                this.reverseFilterFunction = search.addBoolean("reverseFilterFunction", false,
+                        "Reverse the function of # and $ in search filter");
+            } // Synchronising recipe viewer behaviour
 
             var tooltips = root.subsection("tooltips");
             this.tooltipShowCellUpgrades = tooltips.addBoolean("showCellUpgrades", true,
@@ -781,6 +799,10 @@ public final class AEConfig {
                     "Maximum amount of AE/t the vibration chamber can speed up to when generated energy is being fully consumed.");
         }
 
+    }
+
+    private static boolean isModLoaded(String modId) {
+        return FabricLoader.getInstance().isModLoaded(modId);
     }
 
 }
