@@ -22,6 +22,8 @@ public class TerminalSettingsScreen<C extends MEStorageMenu> extends AESubScreen
     private final AECheckbox useInternalSearchRadio;
     private final AECheckbox useExternalSearchRadio;
 
+    private final AECheckbox reverseFilterFunctionCheckbox;
+
     private final AECheckbox rememberCheckbox;
     private final AECheckbox autoFocusCheckbox;
     private final AECheckbox syncWithExternalCheckbox;
@@ -60,6 +62,9 @@ public class TerminalSettingsScreen<C extends MEStorageMenu> extends AESubScreen
                 GuiText.SearchSettingsUseExternalSearch.text(externalSearchMod), this::switchToExternalSearch);
         useExternalSearchRadio.setRadio(true);
         useExternalSearchRadio.active = hasExternalSearch;
+
+        reverseFilterFunctionCheckbox = widgets.addCheckbox("reverseFilterFunctionCheckbox",
+                GuiText.SearchSettingsReverseFilterFunction.text(), this::save);
 
         rememberCheckbox = widgets.addCheckbox("rememberCheckbox", GuiText.SearchSettingsRememberSearch.text(),
                 this::save);
@@ -109,11 +114,13 @@ public class TerminalSettingsScreen<C extends MEStorageMenu> extends AESubScreen
 
         useInternalSearchRadio.setSelected(!config.isUseExternalSearch());
         useExternalSearchRadio.setSelected(config.isUseExternalSearch());
+        reverseFilterFunctionCheckbox.setSelected(config.isReverseFilterFunction());
         rememberCheckbox.setSelected(config.isRememberLastSearch());
         autoFocusCheckbox.setSelected(config.isAutoFocusSearch());
         syncWithExternalCheckbox.setSelected(config.isSyncWithExternalSearch());
         clearExternalCheckbox.setSelected(config.isClearExternalSearchOnOpen());
 
+        reverseFilterFunctionCheckbox.visible = useInternalSearchRadio.isSelected();
         rememberCheckbox.visible = useInternalSearchRadio.isSelected();
         autoFocusCheckbox.visible = useInternalSearchRadio.isSelected();
         syncWithExternalCheckbox.visible = useInternalSearchRadio.isSelected();
@@ -123,6 +130,7 @@ public class TerminalSettingsScreen<C extends MEStorageMenu> extends AESubScreen
 
     private void save() {
         config.setUseExternalSearch(useExternalSearchRadio.isSelected());
+        config.setReverseFilterFunction(reverseFilterFunctionCheckbox.isSelected());
         config.setRememberLastSearch(rememberCheckbox.isSelected());
         config.setAutoFocusSearch(autoFocusCheckbox.isSelected());
         config.setSyncWithExternalSearch(syncWithExternalCheckbox.isSelected());
